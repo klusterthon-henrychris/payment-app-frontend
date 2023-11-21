@@ -1,7 +1,10 @@
+import { Dashboard } from "@/components"
 
  const Home: React.FC = () => {
   return (
-  <div className="">Payment Application</div>
+  <div className="">
+    <Dashboard/>
+  </div>
   )
 }
 
