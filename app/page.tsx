@@ -1,7 +1,7 @@
 
- const Home = () => {
+ const Home: React.FC = () => {
   return (
-  <main>Payment Application</main>
+  <div className="">Payment Application</div>
   )
 }
 
