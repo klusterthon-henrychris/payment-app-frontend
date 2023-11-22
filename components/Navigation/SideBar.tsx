@@ -27,14 +27,14 @@ const SideBar: React.FC<ISideBar> = ({ mobileSideBarOpen }) => {
         const activeNav = pathname === path;
         return (
           <Link href={path} key={path}>
-            <div
+            <nav
               className={`flex p-4 gap-3 font-medium text-sm w-full hover:opacity-90 ${
                 activeNav && "active-nav"
               }`}
             >
               <Icon fill={activeNav ? "#008678" : "#1E1E1E"} />
               {displayName}
-            </div>
+            </nav>
           </Link>
         );
       })}
