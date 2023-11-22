@@ -1,20 +1,28 @@
-@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap");
+@import url("https://api.fontshare.com/v2/css?f[]=satoshi@900,700,500,301,701,300,501,401,901,400&display=swap");
 
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: "Manrope", sans-serif;
+  font-family: "Satoshi", sans-serif;
+  color: #1e1e1e;
 }
 
 /* START: General styles */
 .max-width {
   @apply max-w-[1440px] mx-auto;
+}
+
+.title {
+  @apply font-bold text-lg capitalize;
+}
+
+.active-nav {
+  @apply text-primary bg-primary-soft rounded-[8px];
 }
 
 .custom-btn {
