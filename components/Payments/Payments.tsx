@@ -3,7 +3,7 @@ import React from 'react'
 const Payments = () => {
     return (
         <div className='w-full h-screen bg-[#F3F3F3] flex flex-col'>
-            <div className='flex flex-row justify-between mt-[96px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2'>
+            <div className='flex flex-row justify-between mt-[96px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2 rounded-[8px]'>
                 <p className='text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]'>Payment List</p>
                 <div className='flex flex-row gap-[8px] items-center'>
                     <div className='flex flex-row items-center'>
@@ -24,7 +24,7 @@ const Payments = () => {
                 </div>
             </div>
             <div className="relative overflow-x-auto ml-[24px]">
-                <table className="w-[1100px] text-sm text-left rtl:text-right text-gray-500 ">
+                <table className="w-[1100px] text-sm text-left rtl:text-right text-gray-500">
                     <thead className="text-sm font-Satoshi font-bold text-[#1E1E1E] bg-[#F3F3F3] border-b-[1px] border-[#D9D9D9] h-[40px] w-full">
                         <tr>
                             <th scope="col" className="px-6 py-3">
@@ -139,7 +139,7 @@ const Payments = () => {
                     </tbody>
                 </table>
             </div>
-            <div className='w-[#fff] w-[1100px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex'>
+            <div className='bg-[#fff] w-[1100px] h-[52px] border-t-[1px] border-[#D9D9D9] rounded-b-[8px] ml-[24px] flex items-center'>
                 <p className='mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]'>Showing 1-50 of 2000</p></div>
         </div>
     )
