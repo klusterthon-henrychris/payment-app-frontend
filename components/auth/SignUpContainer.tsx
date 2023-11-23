@@ -2,24 +2,64 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import UserSignUpForm, { UserSignUpFormValues } from "./UserSignUpForm";
+import { useRouter } from "next/navigation";
 import api from "@/utils/api";
 import { useAuthContext } from "@/contexts/useAuth";
+import UserSignUpForm, { UserSignUpFormValues } from "./UserSignUpForm";
+import SignUpProgressBar from "./SignUpProgressBar";
+import BusinessSignUpForm, {
+  BusinessSignUpFormValues,
+} from "./BusinessSignUpForm";
 
 const SignUpContainer: React.FC = () => {
   const [isUserSignUp, setIsUserSignUp] = useState(true);
   const { userAuth, setUserAuth } = useAuthContext();
+  const router = useRouter();
 
   console.log(userAuth, "userAuth");
 
   const handleSubmit = async (values: UserSignUpFormValues) => {
+    // api
+    //   .post("auth/register", values)
+    //   .then((res) => {
+    //     if (res.success) {
+    //       setUserAuth(res.data);
+    //       setIsUserSignUp(false);
+    //     } else {
+    //       throw new Error("Error has occurred");
+    //     }
+    //   })
+    //   .catch((err) => {
+    //     console.error(err, "Error");
+    //   });
+
     try {
-      //   api.post("auth/Register", {
-      //     email: "ooo",
-      //   });
-      setUserAuth(values);
-      setIsUserSignUp(false);
-      console.log(values, "====");
+      const res = await api.post("auth/register", values);
+      if (res?.data?.success) {
+        // setUserAuth(res.data.data);
+        setIsUserSignUp(false);
+        localStorage.setItem("accessToken", res.data.data.accessToken);
+      } else {
+        throw new Error("Error has occurred");
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  const handleRegister = async (values: BusinessSignUpFormValues) => {
+    try {
+      const res = await api.post("business", {
+        ...values,
+        cacNumber: "0123456789012",
+      });
+      if (res?.data?.success) {
+        setUserAuth(res.data.data);
+        setIsUserSignUp(true);
+        router.replace("/dashboard");
+      } else {
+        throw new Error("Error has occurred");
+      }
     } catch (err) {
       console.error(err);
     }
@@ -36,53 +76,19 @@ const SignUpContainer: React.FC = () => {
       </div>
 
       <div className="lg:w-[350px] p-4 lg:px-0 m-auto flex flex-col items-center justify-center">
-        <div className="">
+        <div>
           <p className="bold-title">Welcome to Simple Biz</p>
           <p className="paragraph">
             Please fill in the required details to continue
           </p>
         </div>
-        <div className="pt-10 flex justify-between w-full">
-          <div className="w-full flex items-center">
-            <p
-              className={`border border-primary  rounded-full w-6 h-6 flex items-center justify-center text-sm ${
-                isUserSignUp ? "text-primary" : "bg-primary text-white"
-              }`}
-            >
-              1
-            </p>
-            <div className="flex-grow flex justify-center items-center h-1 border-b-2 border-b-primary border-dotted relative">
-              <p className="font-bold text-sm absolute -top-5 text-primary">
-                User Details
-              </p>
-            </div>
-          </div>
-          <Image src="/logo.svg" alt="logo" width={10} height={10} />
-          <div className="w-full flex items-center">
-            <div
-              className={`flex-grow flex justify-center items-center h-1 border-b-2 border-dotted relative ${
-                isUserSignUp ? "border-b-grey-light" : "border-b-primary"
-              }`}
-            >
-              <p className="font-bold text-sm absolute -top-5 text-primary">
-                {!isUserSignUp && <>Business Details</>}
-              </p>
-            </div>
-            <p
-              className={`border rounded-full w-6 h-6 flex items-center justify-center text-sm ${
-                isUserSignUp
-                  ? "border-grey-light text-grey-light"
-                  : "border-primary text-primary"
-              }`}
-            >
-              2
-            </p>
-          </div>
-        </div>
+
+        <SignUpProgressBar isUserSignUp={isUserSignUp} />
+
         {isUserSignUp ? (
           <UserSignUpForm handleSubmit={handleSubmit} />
         ) : (
-          <div>2</div>
+          <BusinessSignUpForm handleSubmit={handleRegister} />
         )}
 
         <p className="paragraph mt-14">

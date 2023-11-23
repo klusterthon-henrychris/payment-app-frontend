@@ -4,11 +4,13 @@ import { CustomButton, InputGroup } from "@/components/common";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
 
 export type UserSignUpFormValues = {
-  email: string;
-  name: string;
-  phone: string;
+  emailAddress: string;
+  firstName: string;
+  lastName: string;
+  // phone: string;
   password: string;
   address: string;
+  role: string;
 };
 
 interface IUserSignUpForm {
@@ -16,11 +18,12 @@ interface IUserSignUpForm {
 }
 
 const initialValues: UserSignUpFormValues = {
-  email: "",
-  name: "",
-  phone: "",
+  emailAddress: "",
+  firstName: "",
+  lastName: "",
   password: "",
   address: "",
+  role: "Admin",
 };
 
 const UserSignUpForm: React.FC<IUserSignUpForm> = ({ handleSubmit }) => {
@@ -33,22 +36,27 @@ const UserSignUpForm: React.FC<IUserSignUpForm> = ({ handleSubmit }) => {
           <Form className="w-full py-6">
             <div className="grid gap-6">
               <InputGroup
-                name="name"
-                label="Full name"
-                placeholder="Your full name"
+                name="firstName"
+                label="First name"
+                placeholder="Your first name"
               />
               <InputGroup
-                name="email"
+                name="lastName"
+                label="Last name"
+                placeholder="Your last name"
+              />
+              <InputGroup
+                name="emailAddress"
                 type="email"
                 label="Email"
                 placeholder="Email"
               />
-              <InputGroup
+              {/* <InputGroup
                 name="phone"
                 type="number"
                 label="Phone number"
                 placeholder="Phone number"
-              />
+              /> */}
               <InputGroup
                 name="address"
                 label="Address"

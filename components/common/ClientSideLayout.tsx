@@ -10,13 +10,13 @@ interface IClientSideLayout {
 
 const ClientSideLayout: React.FC<IClientSideLayout> = ({ children }) => {
   const [mobileSideBarOpen, setMobileSideBarOpen] = useState(false);
-  const { userAuth: user } = useAuthContext();
+  const { userAuth, isRegistered } = useAuthContext();
 
   const toggleSideBar = () => setMobileSideBarOpen(!mobileSideBarOpen);
 
   return (
     <>
-      {user ? (
+      {userAuth && isRegistered ? (
         <div className="grid lg:grid-cols-5 max-w-[1900px] m-auto relative">
           <SideBar mobileSideBarOpen={mobileSideBarOpen} />
           <div className="lg:col-span-4">

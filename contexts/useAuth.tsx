@@ -46,36 +46,6 @@ const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
     logout: { code: "" },
   });
 
-  const signUp = async () => {
-    try {
-      setLoading(true);
-      setUserAuth({ auth: true });
-    } catch (err: any) {
-      console.error(err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const authenticate = async () => {
-    try {
-      setLoading(true);
-      setUserAuth({ auth: true });
-    } catch (err) {
-      console.error(err, "error");
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const logOut = () => {
-    try {
-      setUserAuth(null);
-    } catch (err) {
-      console.error(err, "error");
-    }
-  };
-
   useEffect(() => {
     const unsubscribe = () => {};
     return unsubscribe;
