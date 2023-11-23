@@ -1,3 +1,4 @@
+"use client";
 import React, { useState } from "react";
 import { Form, Formik, FormikProps } from "formik";
 import { CustomButton, InputGroup } from "@/components/common";
@@ -7,7 +8,6 @@ export type UserSignUpFormValues = {
   emailAddress: string;
   firstName: string;
   lastName: string;
-  // phone: string;
   password: string;
   address: string;
   role: string;
@@ -51,12 +51,6 @@ const UserSignUpForm: React.FC<IUserSignUpForm> = ({ handleSubmit }) => {
                 label="Email"
                 placeholder="Email"
               />
-              {/* <InputGroup
-                name="phone"
-                type="number"
-                label="Phone number"
-                placeholder="Phone number"
-              /> */}
               <InputGroup
                 name="address"
                 label="Address"

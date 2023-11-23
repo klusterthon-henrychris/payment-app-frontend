@@ -15,14 +15,9 @@ interface AuthContextProvider {
 }
 
 type IAuthContext = {
-  //   signUp: () => void;
-  //   authenticate: () => void;
-  //   logOut: () => void;
-  userAuth: object | null;
-  setUserAuth: Dispatch<SetStateAction<object | null>>;
   setIsRegistered: Dispatch<SetStateAction<boolean>>;
   isRegistered: boolean;
-  //   loading: boolean;
+  currentUser: object | null;
 };
 
 const contextItems = {
@@ -37,30 +32,20 @@ const contextItems = {
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
-  const [userAuth, setUserAuth] = useState<object | null>(null);
   const [isRegistered, setIsRegistered] = useState(false);
-  const [loading, setLoading] = useState<boolean>(false);
-  const [errors, setErrors] = useState({
-    login: { code: "" },
-    register: { code: "" },
-    logout: { code: "" },
-  });
+  const [currentUser, setCurrentUser] = useState(null);
+
+  const userData = localStorage.getItem("currentUser");
+  const user = userData ? JSON?.parse(userData) : null;
 
   useEffect(() => {
-    const unsubscribe = () => {};
-    return unsubscribe;
-  }, []);
+    setCurrentUser(user);
+  }, [userData]);
 
   const providerValues = {
-    // signUp,
-    // authenticate,
-    // logOut,
-    userAuth,
     isRegistered,
-    setUserAuth,
     setIsRegistered,
-    // errors,
-    // loading,
+    currentUser,
   };
 
   return (

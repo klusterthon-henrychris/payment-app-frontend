@@ -11,7 +11,6 @@ instance.interceptors.request.use(
   (config) => {
     // Retrieve the access token from where you store it (localStorage, cookies, etc.)
     const accessToken = localStorage.getItem("accessToken");
-    console.log(accessToken, "accessToken");
 
     // Add the access token to the request headers (if available)
     if (accessToken) {

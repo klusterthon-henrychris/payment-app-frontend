@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import { Field, Form, Formik, FormikProps } from "formik";
 import { CustomButton, InputGroup } from "@/components/common";

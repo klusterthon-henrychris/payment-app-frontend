@@ -2,8 +2,12 @@ import React from "react";
 import { CustomButton } from "@/components/common";
 import FeaturedBox from "./FeaturedBox";
 import { featuredItems } from "@/constants";
+import { useAuthContext } from "@/contexts/useAuth";
 
 const DashboardContainer: React.FC = () => {
+  const { currentUser } = useAuthContext();
+  console.log(currentUser, "currentUser");
+
   return (
     <div className="w-full min-h-screen bg-light-white flex flex-col p-6">
       <div className="flex justify-between items-center pb-1">

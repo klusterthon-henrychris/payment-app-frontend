@@ -13,32 +13,15 @@ import BusinessSignUpForm, {
 
 const SignUpContainer: React.FC = () => {
   const [isUserSignUp, setIsUserSignUp] = useState(true);
-  const { userAuth, setUserAuth } = useAuthContext();
   const router = useRouter();
 
-  console.log(userAuth, "userAuth");
-
   const handleSubmit = async (values: UserSignUpFormValues) => {
-    // api
-    //   .post("auth/register", values)
-    //   .then((res) => {
-    //     if (res.success) {
-    //       setUserAuth(res.data);
-    //       setIsUserSignUp(false);
-    //     } else {
-    //       throw new Error("Error has occurred");
-    //     }
-    //   })
-    //   .catch((err) => {
-    //     console.error(err, "Error");
-    //   });
-
     try {
       const res = await api.post("auth/register", values);
       if (res?.data?.success) {
-        // setUserAuth(res.data.data);
         setIsUserSignUp(false);
-        localStorage.setItem("accessToken", res.data.data.accessToken);
+        await localStorage.setItem("accessToken", res.data.data.accessToken);
+        await localStorage.setItem("userData", JSON?.stringify(res.data.data));
       } else {
         throw new Error("Error has occurred");
       }
@@ -54,7 +37,18 @@ const SignUpContainer: React.FC = () => {
         cacNumber: "0123456789012",
       });
       if (res?.data?.success) {
-        setUserAuth(res.data.data);
+        const userData = localStorage.getItem("userData");
+        const user = userData ? JSON?.parse(userData) : {};
+        console.log(res, "res");
+
+        await localStorage.setItem(
+          "currentUser",
+          JSON?.stringify({
+            userId: user.userId,
+            role: user.role,
+            businessId: res.data.data.businessId,
+          })
+        );
         setIsUserSignUp(true);
         router.replace("/dashboard");
       } else {
@@ -70,7 +64,7 @@ const SignUpContainer: React.FC = () => {
       <div className="lg:min-h-screen bg-light-white py-3 flex flex-col items-center justify-evenly">
         <Image src="/logo-gray.png" alt="logo" width={208} height={32} />
         <Image src="/image-sign-up.svg" alt="logo" width={720} height={1024} />
-        <p className="paragraph px-6">
+        <p className="paragraph px-6 w-[296px]">
           enabling small businesses to manage their payments efficiently.
         </p>
       </div>
