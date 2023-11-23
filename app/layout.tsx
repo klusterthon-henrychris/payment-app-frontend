@@ -1,6 +1,6 @@
-import Head from "next/head";
 import { Metadata } from "next/types";
-import ClientSideLayout from "@/components/utils/ClientSideLayout";
+import AuthContextProvider from "@/contexts/useAuth";
+import ClientSideLayout from "@/components/common/ClientSideLayout";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -16,11 +16,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <Head>
-        <link rel="icon" href="/logo.svg" />
-      </Head>
       <body>
-        <ClientSideLayout children={children} />
+        <AuthContextProvider>
+          <ClientSideLayout children={children} />
+        </AuthContextProvider>
       </body>
     </html>
   );
