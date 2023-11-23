@@ -20,6 +20,7 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
           width={32}
           height={32}
           onClick={toggleSideBar}
+          className="lg:hidden"
         />
         <p className="title">{pathname}</p>
       </div>

@@ -1,3 +1,4 @@
+import { IFeaturedBoxItems } from "@/components/Dashboard/FeaturedBox";
 import {
   IconClients,
   IconDashboard,
@@ -39,4 +40,11 @@ export const sideBarItems: ISideBarItems[] = [
     path: "/settings",
     Icon: IconSettings,
   },
+];
+
+export const featuredItems: IFeaturedBoxItems[] = [
+  { label: "No. of Clients", title: "100" },
+  { label: "Catalogue Size", title: "158" },
+  { label: "Pending Invoices", title: "17" },
+  { label: " Expired Invoices", title: "8" },
 ];

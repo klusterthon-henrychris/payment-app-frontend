@@ -23,10 +23,12 @@ const config: Config = {
         },
         "secondary-orange": "#f79761",
         "light-white": {
-          DEFAULT: "rgba(59,60,152,0.03)",
-          100: "rgba(59,60,152,0.02)",
+          DEFAULT: "#F3F3F3",
         },
-        grey: "#747A88",
+        grey: {
+          DEFAULT: "#747A88",
+          light: "#9A9A9A",
+        },
       },
     },
   },

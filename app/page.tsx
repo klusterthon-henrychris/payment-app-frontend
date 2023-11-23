@@ -1,11 +1,11 @@
-import Dashboard from "@/components/Dashboard/Dashboard"
+import DashboardContainer from "@/components/Dashboard/DashboardContainer";
 
- const Home: React.FC = () => {
+const Home: React.FC = () => {
   return (
-  <div className="">
-    <Dashboard/>
-  </div>
-  )
-}
+    <div className="">
+      <DashboardContainer />
+    </div>
+  );
+};
 
-export default Home
+export default Home;
