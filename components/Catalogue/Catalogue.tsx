@@ -46,9 +46,9 @@ const Catalogue = () => {
   useEffect(() => {
     getCatalogue();
   }, []);
-  
+
   return (
-    <div className='w-full h-screen bg-[#F3F3F3] flex flex-col'>
+    <div className='w-full h-full bg-[#F3F3F3] flex flex-col'>
       <CreateCatalogue />
       <div className="flex flex-row justify-between mt-[24px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2 rounded-[8px]">
         <p className="text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]">

@@ -2,21 +2,24 @@
 import Image from 'next/image'
 import React, { useState, useRef } from 'react'
 import { createCatalogue } from './actions/Create'
+import { toast } from "react-toastify";
 
 const CreateCatalogue = () => {
+  //Catalogue creation model
   const [isModelOpen, setIsModelOpen] = useState(false)
   const [modelContent, setModelContent] = useState(1)
+  //Selected image file
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
-
   const [previewURL, setPreviewURL] = useState<string | null>(null);
-
+  //Catalogue creation required fields
   const [name, setName] = useState("");
   const [type, setType] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
-
+  //Warning
+  const [warning, setWarning] = useState("")
   const toggleModel = () => {
     setIsModelOpen(!isModelOpen)
   }
@@ -35,6 +38,7 @@ const CreateCatalogue = () => {
       const imageURL = URL.createObjectURL(file);
       setPreviewURL(imageURL);
     }
+    setWarning("")
   };
   const handleButtonClick = () => {
     if (fileInputRef.current) {
@@ -45,11 +49,19 @@ const CreateCatalogue = () => {
   const removeSelectedPicture = () => {
     setSelectedFile(null)
   }
-  const create = () => {
+  const create = async () => {
     if (selectedFile) {
-      createCatalogue(name, type, description, price, quantity, selectedFile)
+      try {
+        await createCatalogue(name, type, description, price, quantity, selectedFile);
+        window.location.reload();
+        closeModel();
+      } catch (error) {
+        console.error('Error creating catalogue:', error);
+      }
+    } else {
+      setWarning('Please select a file before creating a catalogue.');
+      toast.warn('Please select a file before creating a catalogue.');
     }
-    closeModel()
   }
   console.log(name, type, description, price, quantity, previewURL)
   return (
@@ -68,6 +80,11 @@ const CreateCatalogue = () => {
         transition: "opacity 0.3s ease-in-out",
         backdropFilter: "blur(8px)"
       }}><figure className='w-[428px] h-[602px] bg-[#fff] rounded-[8px] mt-[96px] mx-auto relative'>
+          {warning.length > 0 && (
+            <div className='w-full h-10 bg-[red] flex justify-center items-center'>
+              <p className='text-[#fff]'>{warning}</p>
+            </div>
+          )}
           <div className='flex flex-row justify-between'>
             <p className='text-[16px] font-Satoshi text-[#000] font-bold ml-[24px] mt-[24px]'>Add new product</p>
             <button className='mr-[24px]' onClick={closeModel}>
