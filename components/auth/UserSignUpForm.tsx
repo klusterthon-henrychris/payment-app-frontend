@@ -32,6 +32,8 @@ const UserSignUpForm: React.FC<IUserSignUpForm> = ({ handleSubmit }) => {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
       {({ values }: FormikProps<UserSignUpFormValues>) => {
+        const disabled = Object.values(values).some((value) => value === "");
+
         return (
           <Form className="w-full py-6">
             <div className="grid gap-6">
@@ -70,7 +72,9 @@ const UserSignUpForm: React.FC<IUserSignUpForm> = ({ handleSubmit }) => {
                   {visibility ? <HiOutlineEye /> : <HiOutlineEyeOff />}
                 </span>
               </div>
-              <CustomButton type="submit">Continue</CustomButton>
+              <CustomButton type="submit" disabled={disabled}>
+                Continue
+              </CustomButton>
             </div>
           </Form>
         );

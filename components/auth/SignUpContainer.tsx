@@ -3,8 +3,9 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import { omit } from "lodash";
 import api from "@/utils/api";
-import { useAuthContext } from "@/contexts/useAuth";
 import UserSignUpForm, { UserSignUpFormValues } from "./UserSignUpForm";
 import SignUpProgressBar from "./SignUpProgressBar";
 import BusinessSignUpForm, {
@@ -25,18 +26,22 @@ const SignUpContainer: React.FC = () => {
       } else {
         throw new Error("Error has occurred");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      toast.error(
+        `Error has occurred, please try again: ${err?.response.data.errors[0].description}`
+      );
     }
   };
 
   const handleRegister = async (values: BusinessSignUpFormValues) => {
     try {
       const res = await api.post("business", {
-        ...values,
+        ...omit(values, "policy"),
         cacNumber: "0123456789012",
       });
       if (res?.data?.success) {
+        localStorage.setItem("authenticated", "true");
         const userData = localStorage.getItem("userData");
         const user = userData ? JSON?.parse(userData) : {};
         console.log(res, "res");
@@ -44,18 +49,22 @@ const SignUpContainer: React.FC = () => {
         await localStorage.setItem(
           "currentUser",
           JSON?.stringify({
-            userId: user.userId,
+            userId: user.id,
             role: user.role,
             businessId: res.data.data.businessId,
           })
         );
         setIsUserSignUp(true);
+        toast.success("Registered successfully");
         router.replace("/dashboard");
       } else {
         throw new Error("Error has occurred");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      toast.error(
+        `Error has occurred, please try again: ${err?.response.data.errors[0].description}`
+      );
     }
   };
 
@@ -63,7 +72,12 @@ const SignUpContainer: React.FC = () => {
     <div className="min-h-screen grid lg:grid-cols-2">
       <div className="lg:min-h-screen bg-light-white py-3 flex flex-col items-center justify-evenly">
         <Image src="/logo-gray.png" alt="logo" width={208} height={32} />
-        <Image src="/image-sign-up.svg" alt="logo" width={720} height={1024} />
+        <Image
+          src={`${isUserSignUp ? "/image-sign-up.svg" : "/image-register.svg"}`}
+          alt="logo"
+          width={720}
+          height={isUserSignUp ? 1024 : 100}
+        />
         <p className="paragraph px-6 w-[296px]">
           enabling small businesses to manage their payments efficiently.
         </p>
