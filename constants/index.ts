@@ -1,4 +1,4 @@
-import { IFeaturedBoxItems } from "@/components/Dashboard/FeaturedBox";
+import { IFeaturedBoxItems } from "@/components/dashboard/FeaturedBox";
 import {
   IconClients,
   IconDashboard,

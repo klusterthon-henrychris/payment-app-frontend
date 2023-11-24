@@ -9,12 +9,12 @@ import { toast } from "react-toastify";
 import api from "@/utils/api";
 import { CustomButton, InputGroup } from "../common";
 
-export type UserSignUpFormValues = {
+export type UserSignInFormValues = {
   emailAddress: string;
   password: string;
 };
 
-const initialValues: UserSignUpFormValues = {
+const initialValues: UserSignInFormValues = {
   emailAddress: "",
   password: "",
 };
@@ -23,7 +23,7 @@ const LoginContainer: React.FC = () => {
   const router = useRouter();
   const [visibility, setVisibility] = useState(false);
 
-  const handleSubmit = async (values: UserSignUpFormValues) => {
+  const handleSubmit = async (values: UserSignInFormValues) => {
     try {
       const res = await api.post("auth/login", values);
       if (res?.data?.success) {
@@ -67,8 +67,8 @@ const LoginContainer: React.FC = () => {
         </div>
 
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ values }: FormikProps<UserSignUpFormValues>) => {
-            const disabled = Object.values(values).every(
+          {({ values }: FormikProps<UserSignInFormValues>) => {
+            const disabled = Object.values(values).some(
               (value) => value === ""
             );
 

@@ -13,10 +13,6 @@ const config: Config = {
       },
       colors: {
         "neutral-black": "#1E1E1E",
-        "primary-blue": {
-          DEFAULT: "#2B59FF",
-          100: "#F5F8FF",
-        },
         primary: {
           DEFAULT: "#008678",
           soft: "#CCE7E4",
@@ -28,6 +24,9 @@ const config: Config = {
         grey: {
           DEFAULT: "#747A88",
           light: "#9A9A9A",
+        },
+        error: {
+          DEFAULT: "#F44336",
         },
       },
     },

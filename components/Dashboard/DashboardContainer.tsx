@@ -1,17 +1,17 @@
 import React from "react";
 import { CustomButton } from "@/components/common";
-import FeaturedBox from "./FeaturedBox";
 import { featuredItems } from "@/constants";
-import { useAuthContext } from "@/contexts/useAuth";
+import { useUser } from "@/contexts/useApi";
+import FeaturedBox from "./FeaturedBox";
 
 const DashboardContainer: React.FC = () => {
-  const { currentUser } = useAuthContext();
-  console.log(currentUser, "currentUser");
+  const { user } = useUser();
+  console.log(user, "user");
 
   return (
     <div className="w-full min-h-screen bg-light-white flex flex-col p-6">
       <div className="flex justify-between items-center pb-1">
-        <p className="bold-title">Hi Wade 👋</p>
+        <p className="bold-title">Hi {user?.firstName} 👋</p>
         <CustomButton>+ Generate Invoice</CustomButton>
       </div>
 
@@ -185,7 +185,7 @@ const DashboardContainer: React.FC = () => {
               </tbody>
             </table>
           </div>
-          <div className="w-[#fff] w-[364x] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
+          <div className="w-[364px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
             <p className="mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]">
               Showing 1-50 of 2000
             </p>
@@ -322,7 +322,7 @@ const DashboardContainer: React.FC = () => {
               </tbody>
             </table>
           </div>
-          <div className="w-[#fff] w-[364x] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
+          <div className="w-[364px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
             <p className="mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]">
               Showing 1-50 of 2000
             </p>

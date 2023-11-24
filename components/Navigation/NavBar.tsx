@@ -3,12 +3,14 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
+import { useUser } from "@/contexts/useApi";
 
 interface INavBar {
   toggleSideBar: () => void;
 }
 
 const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
+  const { user } = useUser();
   const pathname = usePathname().slice(1);
 
   return (
@@ -25,29 +27,23 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
         <p className="title">{pathname}</p>
       </div>
       <nav className="flex gap-6">
-        <Link href="/" className="flex items-center">
+        <div className="flex items-center">
           <Image
             src="/icon-notification.svg"
             alt="logo"
             width={32}
             height={32}
           />
-        </Link>
+        </div>
         <div className="flex gap-3">
-          <Link href="/" className="flex items-center">
+          <div className="flex items-center">
             <Image src="/avatar.png" alt="logo" width={32} height={32} />
-          </Link>
+          </div>
           <div>
-            <p className="font-semibold">Wade Warren</p>
-            <p className="text-xs">Wade@email.com</p>
+            <p className="font-semibold">{`${user?.firstName} ${user?.lastName}`}</p>
+            <p className="text-xs">{user?.emailAddress}</p>
           </div>
         </div>
-
-        {/* <CustomButton
-        title='Sign in'
-        btnType='button'
-        containerStyles='text-primary-blue rounded-full bg-white min-w-[130px]'
-      /> */}
       </nav>
     </header>
   );

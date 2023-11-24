@@ -1,11 +1,34 @@
-import React from "react";
+import React, { useState } from "react";
+import { useClients } from "@/contexts/useApi";
+import { CustomButton } from "../common";
+import ModalPopup from "../common/ModalPopup";
+import AddClientsForm from "./AddClientsForm";
 
-function Clients() {
+const Clients: React.FC = () => {
+  const { clients } = useClients();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const toggleModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
+  console.log(clients, "clients");
+
   return (
-    <div className="w-full h-screen bg-[#F3F3F3] flex flex-col">
-      <button className="ml-auto bg-[#008678] text-[#fff] rounded-[8px] p-3 mt-[24px] mr-[24px]">
-        + Add new client
-      </button>
+    <div className="w-full min-h-screen bg-light-white p-6">
+      <ModalPopup
+        isModalOpen={isModalOpen}
+        toggleModal={toggleModal}
+        heading=" Payment successful"
+        customBody={<AddClientsForm handleSubmit={() => {}} />}
+      >
+        <AddClientsForm handleSubmit={() => {}} />
+      </ModalPopup>
+
+      <div className="flex justify-end items-center">
+        <CustomButton onClick={toggleModal}> + Add new client</CustomButton>
+      </div>
+
       <div className="flex flex-row justify-between mt-[24px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2">
         <p className="text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]">
           Client List
@@ -19,7 +42,7 @@ function Clients() {
                   type="text"
                   id="voice-search"
                   style={{ textIndent: "16px" }}
-                  className="w-[283px] h-[25px] py-6 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-[#1E1E1E]"
+                  className="w-[283px] h-[25px] py-6 border-[1px] border-[#D9D9D9] rounded-[8px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-[#1E1E1E]"
                   placeholder="Search..."
                   required
                 />
@@ -201,13 +224,13 @@ function Clients() {
           </tbody>
         </table>
       </div>
-      <div className="w-[#fff] w-[1100px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
+      <div className="w-[1100px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
         <p className="mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]">
           Showing 1-50 of 2000
         </p>
       </div>
     </div>
   );
-}
+};
 
 export default Clients;

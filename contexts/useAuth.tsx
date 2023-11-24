@@ -9,6 +9,8 @@ import {
   useEffect,
   useState,
 } from "react";
+import { jwtDecode } from "jwt-decode";
+import { useRouter } from "next/navigation";
 
 interface AuthContextProvider {
   children: ReactNode;
@@ -17,35 +19,34 @@ interface AuthContextProvider {
 type IAuthContext = {
   setIsRegistered: Dispatch<SetStateAction<boolean>>;
   isRegistered: boolean;
-  currentUser: object | null;
-};
-
-const contextItems = {
-  signUp: null,
-  authenticate: null,
-  logOut: null,
-  user: null,
-  errors: null,
-  loading: null,
 };
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
   const [isRegistered, setIsRegistered] = useState(false);
-  const [currentUser, setCurrentUser] = useState(null);
+  const router = useRouter();
 
   const userData = localStorage.getItem("currentUser");
   const user = userData ? JSON?.parse(userData) : null;
 
+  const checkSession = () => {
+    const token = localStorage.getItem("accessToken");
+
+    const decodedData = token && jwtDecode(token);
+    if (decodedData && (decodedData?.exp as any) < Date.now() / 1000) {
+      localStorage.clear();
+      router.push("/sign-in");
+    }
+  };
+
   useEffect(() => {
-    setCurrentUser(user);
+    checkSession();
   }, [userData]);
 
   const providerValues = {
     isRegistered,
     setIsRegistered,
-    currentUser,
   };
 
   return (
