@@ -6,6 +6,7 @@ import {
   IconPayments,
   IconSettings,
   IconType,
+  IconCatalogue
 } from "@/components/svgs";
 
 type ISideBarItems = {
@@ -24,6 +25,11 @@ export const sideBarItems: ISideBarItems[] = [
     displayName: "Clients",
     path: "/clients",
     Icon: IconClients,
+  },
+  {
+    displayName: "Catalogue",
+    path: "/catalogue",
+    Icon: IconCatalogue,
   },
   {
     displayName: "Invoices",
