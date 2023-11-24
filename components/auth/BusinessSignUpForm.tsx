@@ -10,6 +10,7 @@ export type BusinessSignUpFormValues = {
   industry: string;
   businessDescription: string;
   cacNumber: string;
+  policy: string;
 };
 
 interface IBusinessSignUpForm {
@@ -23,6 +24,7 @@ const initialValues: BusinessSignUpFormValues = {
   industry: "",
   businessDescription: "",
   cacNumber: "0123456789012",
+  policy: "",
 };
 
 const BusinessSignUpForm: React.FC<IBusinessSignUpForm> = ({
@@ -30,7 +32,11 @@ const BusinessSignUpForm: React.FC<IBusinessSignUpForm> = ({
 }) => {
   return (
     <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-      {({ values }: FormikProps<BusinessSignUpFormValues>) => {
+      {({ values, setFieldValue }: FormikProps<BusinessSignUpFormValues>) => {
+        const disabled = Object.values(values).some((value) => value === "");
+
+        const isChecked = values.policy === "Yes";
+
         return (
           <Form className="w-full py-6">
             <div className="grid gap-6">
@@ -72,8 +78,24 @@ const BusinessSignUpForm: React.FC<IBusinessSignUpForm> = ({
                   <option value="Tech">Tech</option>
                 </Field>
               </div>
+              <div className="flex items-start gap-2">
+                <Field
+                  type="checkbox"
+                  name="policy"
+                  className="border rounded-sm h-[16px] w-[16px]"
+                  checked={isChecked}
+                  onChange={() =>
+                    setFieldValue("policy", isChecked ? "" : "Yes")
+                  }
+                />
+                <p className="text-neutral-black text-xs">
+                  By signing up you accept our Terms and Privacy policy
+                </p>
+              </div>
 
-              <CustomButton type="submit">Continue</CustomButton>
+              <CustomButton type="submit" disabled={disabled}>
+                Continue
+              </CustomButton>
             </div>
           </Form>
         );

@@ -1,4 +1,6 @@
 import { Metadata } from "next/types";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import AuthContextProvider from "@/contexts/useAuth";
 import ClientSideLayout from "@/components/common/ClientSideLayout";
 import "./globals.css";
@@ -17,6 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <ToastContainer />
         <AuthContextProvider>
           <ClientSideLayout children={children} />
         </AuthContextProvider>

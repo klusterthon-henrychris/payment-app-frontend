@@ -5,15 +5,16 @@ import Link from "next/link";
 import { Form, Formik, FormikProps } from "formik";
 import { useRouter } from "next/navigation";
 import { HiOutlineEye, HiOutlineEyeOff } from "react-icons/hi";
+import { toast } from "react-toastify";
 import api from "@/utils/api";
 import { CustomButton, InputGroup } from "../common";
 
-export type UserSignUpFormValues = {
+export type UserSignInFormValues = {
   emailAddress: string;
   password: string;
 };
 
-const initialValues: UserSignUpFormValues = {
+const initialValues: UserSignInFormValues = {
   emailAddress: "",
   password: "",
 };
@@ -22,11 +23,12 @@ const LoginContainer: React.FC = () => {
   const router = useRouter();
   const [visibility, setVisibility] = useState(false);
 
-  const handleSubmit = async (values: UserSignUpFormValues) => {
+  const handleSubmit = async (values: UserSignInFormValues) => {
     try {
       const res = await api.post("auth/login", values);
       if (res?.data?.success) {
         localStorage.setItem("accessToken", res.data.data.accessToken);
+        localStorage.setItem("authenticated", "true");
         localStorage.setItem(
           "currentUser",
           await JSON?.stringify({
@@ -40,8 +42,11 @@ const LoginContainer: React.FC = () => {
       } else {
         throw new Error("Error has occurred");
       }
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
+      toast.error(
+        `Error has occurred, please try again: ${err?.response.data.errors[0].description}`
+      );
     }
   };
 
@@ -62,7 +67,11 @@ const LoginContainer: React.FC = () => {
         </div>
 
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-          {({ values }: FormikProps<UserSignUpFormValues>) => {
+          {({ values }: FormikProps<UserSignInFormValues>) => {
+            const disabled = Object.values(values).some(
+              (value) => value === ""
+            );
+
             return (
               <Form className="w-full py-6">
                 <div className="grid gap-6">
@@ -86,7 +95,9 @@ const LoginContainer: React.FC = () => {
                       {visibility ? <HiOutlineEye /> : <HiOutlineEyeOff />}
                     </span>
                   </div>
-                  <CustomButton type="submit">Continue</CustomButton>
+                  <CustomButton type="submit" disabled={disabled}>
+                    Continue
+                  </CustomButton>
                 </div>
               </Form>
             );
