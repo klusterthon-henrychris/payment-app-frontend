@@ -32,6 +32,7 @@ const LoginContainer: React.FC = () => {
 
         router.replace("/dashboard");
       } else {
+        toast.error("Error has occurred, please try again");
         throw new Error("Error has occurred");
       }
     } catch (err: any) {

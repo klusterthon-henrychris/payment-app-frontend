@@ -1,7 +1,7 @@
 import React from "react";
 import { CustomButton } from "@/components/common";
 import { featuredItems } from "@/constants";
-import { useUser } from "@/contexts/useApi";
+import { useUser } from "@/contexts/apiContext";
 import FeaturedBox from "./FeaturedBox";
 
 const DashboardContainer: React.FC = () => {

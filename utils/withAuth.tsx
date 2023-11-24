@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useLayoutEffect } from "react";
+import { useLayoutEffect } from "react";
 import { redirect } from "next/navigation";
 
 export default function withAuth(Component: React.FC) {

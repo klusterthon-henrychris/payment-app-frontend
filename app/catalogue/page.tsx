@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Catalogue from "@/components/Catalogue/Catalogue";
 import withAuth from "@/utils/withAuth";
