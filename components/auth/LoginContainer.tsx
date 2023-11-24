@@ -29,14 +29,6 @@ const LoginContainer: React.FC = () => {
       if (res?.data?.success) {
         localStorage.setItem("accessToken", res.data.data.accessToken);
         localStorage.setItem("authenticated", "true");
-        localStorage.setItem(
-          "currentUser",
-          await JSON?.stringify({
-            userId: res.data.data.id,
-            role: res.data.data.role,
-          })
-        );
-        console.log(res, "res");
 
         router.replace("/dashboard");
       } else {

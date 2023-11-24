@@ -10,18 +10,20 @@ interface IClientSideLayout {
 const ClientSideLayout: React.FC<IClientSideLayout> = ({ children }) => {
   const [mobileSideBarOpen, setMobileSideBarOpen] = useState(false);
   const pathname = usePathname();
-  const isRegistered = localStorage.getItem("authenticated") === "true";
+  const getIsAuthenticated =
+    typeof window !== "undefined" ? localStorage.getItem("authenticated") : "";
+  const isRegistered = getIsAuthenticated === "true";
   const excludeSidebarPages = ["/sign-in", "/sign-up"];
   const shouldShowSidebar = !excludeSidebarPages.includes(pathname);
 
   const toggleSideBar = () => setMobileSideBarOpen(!mobileSideBarOpen);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!isRegistered) {
-      router.push("/sign-in");
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (!isRegistered) {
+  //     router.push("/sign-in");
+  //   }
+  // }, []);
 
   return (
     <div

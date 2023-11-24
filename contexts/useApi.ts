@@ -18,8 +18,11 @@ export const useUser = () => {
     } catch (err: any) {
       console.error(err);
       toast.error(
-        `Error getting user: ${err?.response?.data?.errors[0]?.description}`
+        `Error getting user: ${
+          err?.response?.data?.errors[0]?.description || err
+        }`
       );
+      toast.clearWaitingQueue();
     }
   };
 
@@ -45,7 +48,9 @@ export const useClients = () => {
     } catch (err: any) {
       console.error(err);
       toast.error(
-        `Error getting clients: ${err?.response?.data?.errors[0]?.description}`
+        `Error getting clients: ${
+          err?.response?.data?.errors[0]?.description || err
+        }`
       );
     }
   };

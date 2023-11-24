@@ -1,8 +1,9 @@
 import React from "react";
 import Catalogue from "@/components/Catalogue/Catalogue";
+import withAuth from "@/utils/withAuth";
 
 const CatalogueScreen: React.FC = () => {
-  return <Catalogue/>
+  return <Catalogue />;
 };
 
-export default CatalogueScreen;
+export default withAuth(CatalogueScreen);

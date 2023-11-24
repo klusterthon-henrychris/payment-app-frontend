@@ -6,7 +6,7 @@ import FeaturedBox from "./FeaturedBox";
 
 const DashboardContainer: React.FC = () => {
   const { user } = useUser();
-  console.log(user, "user");
+  // console.log(user, "user");
 
   return (
     <div className="w-full min-h-screen bg-light-white flex flex-col p-6">

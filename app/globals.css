@@ -42,3 +42,10 @@ select,
 textarea {
   outline: none;
 }
+
+.spin-button-none::-webkit-inner-spin-button,
+.spin-button-none::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
+}

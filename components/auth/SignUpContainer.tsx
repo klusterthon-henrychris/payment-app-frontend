@@ -22,7 +22,6 @@ const SignUpContainer: React.FC = () => {
       if (res?.data?.success) {
         setIsUserSignUp(false);
         await localStorage.setItem("accessToken", res.data.data.accessToken);
-        await localStorage.setItem("userData", JSON?.stringify(res.data.data));
       } else {
         throw new Error("Error has occurred");
       }
@@ -42,18 +41,7 @@ const SignUpContainer: React.FC = () => {
       });
       if (res?.data?.success) {
         localStorage.setItem("authenticated", "true");
-        const userData = localStorage.getItem("userData");
-        const user = userData ? JSON?.parse(userData) : {};
-        console.log(res, "res");
 
-        await localStorage.setItem(
-          "currentUser",
-          JSON?.stringify({
-            userId: user.id,
-            role: user.role,
-            businessId: res.data.data.businessId,
-          })
-        );
         setIsUserSignUp(true);
         toast.success("Registered successfully");
         router.replace("/dashboard");
