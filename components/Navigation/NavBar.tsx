@@ -12,6 +12,7 @@ interface INavBar {
 const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
   const { user } = useUser();
   const pathname = usePathname().slice(1);
+  const pageHead = pathname.split("/")[0];
 
   return (
     <header className="w-full z-10 flex px-6 bg-white h-20 items-center justify-between">
@@ -24,7 +25,7 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
           onClick={toggleSideBar}
           className="lg:hidden"
         />
-        <p className="title">{pathname}</p>
+        <p className="title">{pageHead}</p>
       </div>
       <nav className="flex gap-6">
         <div className="flex items-center">

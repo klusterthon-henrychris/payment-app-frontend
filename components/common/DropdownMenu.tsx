@@ -2,11 +2,12 @@ import React, { ReactElement } from "react";
 import { Menu, Transition } from "@headlessui/react";
 
 interface IDropdownMenu {
-  menuItems: { title: string; onClick: () => void }[];
+  menuItems: { title: string; onClick: (prop?: any) => void }[];
   title: ReactElement;
+  id?: string;
 }
 
-const DropdownMenu: React.FC<IDropdownMenu> = ({ title, menuItems }) => {
+const DropdownMenu: React.FC<IDropdownMenu> = ({ title, menuItems, id }) => {
   return (
     <div className="relative inline-block text-left">
       <Menu>
@@ -35,7 +36,7 @@ const DropdownMenu: React.FC<IDropdownMenu> = ({ title, menuItems }) => {
                       key={menuItem.title}
                       as="div"
                       className="p-3 rounded-md hover:bg-light-white cursor-pointer"
-                      onClick={menuItem.onClick}
+                      onClick={() => menuItem.onClick(id)}
                     >
                       {({ active }) => <span>{menuItem.title}</span>}
                     </Menu.Item>

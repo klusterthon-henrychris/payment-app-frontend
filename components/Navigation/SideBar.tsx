@@ -18,13 +18,13 @@ const SideBar: React.FC<ISideBar> = ({ mobileSideBarOpen }) => {
         mobileSideBarOpen ? "block" : "hidden"
       } lg:block`}
     >
-      <p className="title h-20 flex gap-3 items-center">
-        <Image src="/logo.svg" alt="logo" width={32} height={32} />
-        Product name
-      </p>
+      <div className="h-20 flex items-center">
+        <Image src="/logo-light.svg" alt="logo" width={208} height={32} />
+      </div>
+
       {sideBarItems.map((sideBarItems) => {
         const { displayName, Icon, path } = sideBarItems;
-        const activeNav = pathname === path;
+        const activeNav = pathname.includes(path);
         return (
           <Link href={path} key={path}>
             <nav

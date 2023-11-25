@@ -40,6 +40,12 @@ export const getAllClients = async (): Promise<any> => {
   return res.data;
 };
 
+export const getClientById = async (clientId: string) => {
+  const res = await api.get(`clients/${clientId}`);
+
+  return res.data;
+};
+
 export type AddClientPostBody = {
   emailAddress: string;
   firstName: string;
