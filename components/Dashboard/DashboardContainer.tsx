@@ -1,18 +1,17 @@
 import React from "react";
 import { CustomButton } from "@/components/common";
 import { featuredItems } from "@/constants";
-import { useUser } from "@/contexts/apiContext";
 import FeaturedBox from "./FeaturedBox";
 import Image from "next/image";
+import { useGetUser } from "@/store/useApi";
 
 const DashboardContainer: React.FC = () => {
-  const { user } = useUser();
-  // console.log(user, "user");
+  const { data: user } = useGetUser();
 
   return (
     <div className="w-full min-h-screen bg-light-white flex flex-col p-6">
       <div className="flex justify-between items-center pb-1">
-        <p className="bold-title">Hi {user?.firstName} 👋</p>
+        <p className="bold-title">Hi {user?.firstName ?? ""} 👋</p>
         <CustomButton>+ Generate Invoice</CustomButton>
       </div>
 

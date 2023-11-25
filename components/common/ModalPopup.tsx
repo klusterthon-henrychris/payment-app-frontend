@@ -52,7 +52,6 @@ const ModalPopup: React.FC<ModalPopupPropType> = ({
                 <Dialog.Title as="h3" className="title">
                   {heading}
                 </Dialog.Title>
-                <AddClientsForm handleSubmit={() => {}} />
                 {CustomBody ? (
                   <>{CustomBody}</>
                 ) : (

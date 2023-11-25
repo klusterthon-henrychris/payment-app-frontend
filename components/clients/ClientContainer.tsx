@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { CustomButton } from "../common";
+import { useParams } from "next/navigation";
 import Image from "next/image";
+import { toast } from "react-toastify";
+import { useQueryClient } from "@tanstack/react-query";
+import { queryKeys, useGetClientById, useUpdateClient } from "@/store/useApi";
 import FeaturedBox from "../dashboard/FeaturedBox";
 import AllClientsTable, { DeleteClientModal } from "./AllClientsTable";
 import ModalPopup from "../common/ModalPopup";
-import AddClientsForm from "./AddClientsForm";
-import { useParams } from "next/navigation";
-import { useGetClientById } from "@/store/useApi";
+import AddClientsForm, { AddClientsFormValues } from "./AddClientsForm";
+import { CustomButton } from "../common";
 
 const ClientContainer: React.FC = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -14,9 +16,28 @@ const ClientContainer: React.FC = () => {
 
   const { clientId } = useParams();
   const { data: client } = useGetClientById(clientId as string);
+  const { mutate: updateClient } = useUpdateClient();
 
   const toggleDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
   const toggleEditModal = () => setEditModalOpen(!editModalOpen);
+
+  const queryClient = useQueryClient();
+
+  const refetchData = () =>
+    queryClient.invalidateQueries([queryKeys.getClientById]);
+
+  const handleEditInfo = (values: AddClientsFormValues) => {
+    updateClient(
+      { clientId: client?.clientId, postBody: values },
+      {
+        onSuccess: () => {
+          refetchData();
+          setEditModalOpen(false);
+          toast.success("Client info updated");
+        },
+      }
+    );
+  };
 
   return (
     <div className="w-full min-h-screen bg-light-white p-6">
@@ -38,9 +59,9 @@ const ClientContainer: React.FC = () => {
         <div className="flex flex-col gap-3 justify-between col-span-3">
           <div className="w-full">
             <p className="bold-title">
-              {`${client?.firstName} ${client?.lastName}`}
+              {`${client?.firstName ?? ""} ${client?.lastName ?? ""}`}
             </p>
-            <p className="title mt-2">{client?.emailAddress}</p>
+            <p className="title mt-2">{client?.emailAddress ?? ""}</p>
           </div>
           <div className="flex gap-4">
             <FeaturedBox
@@ -85,7 +106,13 @@ const ClientContainer: React.FC = () => {
         isModalOpen={editModalOpen}
         toggleModal={toggleEditModal}
         heading="Edit client info?"
-        CustomBody={<AddClientsForm handleSubmit={() => {}} />}
+        CustomBody={
+          <AddClientsForm
+            handleSubmit={handleEditInfo}
+            oldValues={client}
+            buttonText="Save"
+          />
+        }
       />
       <DeleteClientModal
         deleteModalOpen={deleteModalOpen}

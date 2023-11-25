@@ -10,41 +10,46 @@ import {
   useState,
 } from "react";
 import { jwtDecode } from "jwt-decode";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useGetUser } from "./useApi";
+import { AddClientsFormValues } from "@/components/clients/AddClientsForm";
 
 interface AuthContextProvider {
   children: ReactNode;
 }
 
-type IAuthContext = {
-  setIsRegistered: Dispatch<SetStateAction<boolean>>;
-  isRegistered: boolean;
-};
+type IAuthContext = { signOut: () => void };
 
 const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 
 const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
-  const [isRegistered, setIsRegistered] = useState(false);
   const router = useRouter();
+  const pathname = usePathname();
+  // const user = data ?? ({} as AddClientsFormValues);
+
+  const signOut = () => {
+    localStorage.clear();
+    router.push("/sign-in");
+  };
 
   const checkSession = () => {
     const token = localStorage.getItem("accessToken");
 
     const decodedData = token && jwtDecode(token);
-    if (decodedData && (decodedData?.exp as any) < Date.now() / 1000) {
-      localStorage.clear();
-      router.push("/sign-in");
+    if (
+      !token &&
+      decodedData &&
+      (decodedData?.exp as any) < Date.now() / 1000
+    ) {
+      signOut();
     }
   };
 
   useEffect(() => {
     checkSession();
-  }, []);
+  }, [pathname]);
 
-  const providerValues = {
-    isRegistered,
-    setIsRegistered,
-  };
+  const providerValues = { signOut };
 
   return (
     <AuthContext.Provider value={providerValues}>

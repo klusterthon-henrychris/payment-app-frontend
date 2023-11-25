@@ -1,20 +1,23 @@
 import axios from "axios";
-
-// export default axios.create({
-//   baseURL: "http://localhost:5000/api/",
-// });
+import { jwtDecode } from "jwt-decode";
 
 const instance = axios.create({ baseURL: "http://localhost:5000/api/" });
 
 // Add a request interceptor
 instance.interceptors.request.use(
   (config) => {
-    // Retrieve the access token from where you store it (localStorage, cookies, etc.)
     const accessToken = localStorage.getItem("accessToken");
 
     // Add the access token to the request headers (if available)
     if (accessToken) {
       config.headers["Authorization"] = `Bearer ${accessToken}`;
+    }
+
+    const token = localStorage.getItem("accessToken");
+
+    const decodedData = token && jwtDecode(token);
+    if (decodedData && (decodedData?.exp as any) < Date.now() / 1000) {
+      localStorage.clear();
     }
 
     return config;

@@ -1,9 +1,9 @@
-"use client"
-import Image from 'next/image'
-import { it } from 'node:test'
-import React, { useEffect, useState } from 'react'
-import CreateCatalogue from './CreateCatalogue'
-import CatalogueOptions from './CatalogueOptions'
+"use client";
+import Image from "next/image";
+import { it } from "node:test";
+import React, { useEffect, useState } from "react";
+import CreateCatalogue from "./CreateCatalogue";
+import CatalogueOptions from "./CatalogueOptions";
 import api from "@/utils/api";
 import { toast } from "react-toastify";
 
@@ -29,8 +29,8 @@ const Catalogue = () => {
     try {
       const res = await api.get("products/all");
       if (res?.data?.success) {
-        console.log("res:", res?.data)
-        setCatalogues(res?.data?.data)
+        console.log("res:", res?.data);
+        setCatalogues(res?.data?.data);
         setIsToggled(new Array(res?.data?.data.length).fill(true));
       } else {
         throw new Error("Error has occurred");
@@ -48,7 +48,7 @@ const Catalogue = () => {
   }, []);
 
   return (
-    <div className='w-full h-full bg-[#F3F3F3] flex flex-col'>
+    <div className="w-full min-h-screen bg-[#F3F3F3] flex flex-col">
       <CreateCatalogue />
       <div className="flex flex-row justify-between mt-[24px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2 rounded-[8px]">
         <p className="text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]">
@@ -89,37 +89,55 @@ const Catalogue = () => {
               </div>
             </form>
           </div>
-          <div className='w-[302px] h-[25px] bg-[#fff] py-6 px-16 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px]'></div>
-          <div className='w-[50px] h-[25px] bg-[#fff] py-6 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px] mr-[60px]'></div>
+          <div className="w-[302px] h-[25px] bg-[#fff] py-6 px-16 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px]"></div>
+          <div className="w-[50px] h-[25px] bg-[#fff] py-6 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px] mr-[60px]"></div>
         </div>
       </div>
       <div className="flex flex-wrap space-x-[24px]">
-        {catalogues.length > 0 && catalogues.map((item, index) => (
-          <div key={index} className='w-[270px] h-[350px] bg-[#fff] rounded-[8px] flex flex-col mt-[24px] ml-[24px]'>
-            <Image src={item.imageUrl} width={238} height={50} alt='catalogue-image' className='rounded-[8px] mx-auto mt-[16px]' />
-            <div className='flex flex-row justify-between mt-[16px]'>
-              <p className='text-[16px] text-[#1E1E1E] font-Satoshi font-normal ml-[16px]'>{item.name}</p>
-              <CatalogueOptions />
-            </div>
-            <div className='flex flex-row justify-around mt-[16px] items-center'>
-              <button
-                className={`bg-[#008678] w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ${isToggled[index] ? 'justify-end' : 'justify-start'}`}
-                onClick={() => handleToggle(index)}
-              >
-                <div
-                  className={`w-5 h-5 rounded-full bg-[#fff] shadow-md transition-transform duration-300`}
-                />
-              </button>
-              <div className='flex items-center justify-between w-[60px[ h-[24px] rounded-full border border-[1px] border-[#9A9A9A] p-4'>
-                <p className='text-[#9A9A9A] text-[12px] font-Satoshi font-medium '>{item.productType}</p>
+        {catalogues.length > 0 &&
+          catalogues.map((item, index) => (
+            <div
+              key={index}
+              className="w-[270px] h-[350px] bg-[#fff] rounded-[8px] flex flex-col mt-[24px] ml-[24px]"
+            >
+              <Image
+                src={item.imageUrl}
+                width={238}
+                height={50}
+                alt="catalogue-image"
+                className="rounded-[8px] mx-auto mt-[16px]"
+              />
+              <div className="flex flex-row justify-between mt-[16px]">
+                <p className="text-[16px] text-[#1E1E1E] font-Satoshi font-normal ml-[16px]">
+                  {item.name}
+                </p>
+                <CatalogueOptions />
               </div>
-              <p className='font-Satoshi text-[16px] text-[#1E1E1E] font-bold'>₦{item.price}</p>
+              <div className="flex flex-row justify-around mt-[16px] items-center">
+                <button
+                  className={`bg-[#008678] w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ${
+                    isToggled[index] ? "justify-end" : "justify-start"
+                  }`}
+                  onClick={() => handleToggle(index)}
+                >
+                  <div
+                    className={`w-5 h-5 rounded-full bg-[#fff] shadow-md transition-transform duration-300`}
+                  />
+                </button>
+                <div className="flex items-center justify-between w-[60px[ h-[24px] rounded-full border border-[1px] border-[#9A9A9A] p-4">
+                  <p className="text-[#9A9A9A] text-[12px] font-Satoshi font-medium ">
+                    {item.productType}
+                  </p>
+                </div>
+                <p className="font-Satoshi text-[16px] text-[#1E1E1E] font-bold">
+                  ₦{item.price}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Catalogue
+export default Catalogue;
