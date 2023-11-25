@@ -12,6 +12,9 @@ export type AddClientsFormValues = {
 
 interface IAddClientsForm {
   handleSubmit: (values: AddClientsFormValues) => void;
+  buttonText?: string;
+  oldValues?: AddClientsFormValues;
+  disableButton?: boolean;
 }
 
 const initialValues: AddClientsFormValues = {
@@ -22,9 +25,16 @@ const initialValues: AddClientsFormValues = {
   businessName: "",
 };
 
-const AddClientsForm: React.FC<IAddClientsForm> = ({ handleSubmit }) => {
+const AddClientsForm: React.FC<IAddClientsForm> = ({
+  handleSubmit,
+  buttonText,
+  oldValues,
+}) => {
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={oldValues ? oldValues : initialValues}
+      onSubmit={handleSubmit}
+    >
       {({ values }) => {
         const disabled = Object.values(values).some((value) => value === "");
 
@@ -59,7 +69,7 @@ const AddClientsForm: React.FC<IAddClientsForm> = ({ handleSubmit }) => {
               />
 
               <CustomButton type="submit" disabled={disabled}>
-                Continue
+                {buttonText ?? "Continue"}
               </CustomButton>
             </div>
           </Form>

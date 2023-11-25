@@ -1,16 +1,16 @@
 "use client";
 import React from "react";
-import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useUser } from "@/contexts/apiContext";
+import { useGetUser } from "@/store/useApi";
+import withAuth from "@/utils/withAuth";
 
 interface INavBar {
-  toggleSideBar: () => void;
+  toggleSideBar?: () => void;
 }
 
 const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
-  const { user } = useUser();
+  const { data: user } = useGetUser();
   const pathname = usePathname().slice(1);
   const pageHead = pathname.split("/")[0];
 
@@ -41,8 +41,10 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
             <Image src="/avatar.png" alt="logo" width={32} height={32} />
           </div>
           <div>
-            <p className="font-semibold">{`${user?.firstName} ${user?.lastName}`}</p>
-            <p className="text-xs">{user?.emailAddress}</p>
+            <p className="font-semibold">{`${user?.firstName ?? ""} ${
+              user?.lastName ?? ""
+            }`}</p>
+            <p className="text-xs">{user?.emailAddress ?? ""}</p>
           </div>
         </div>
       </nav>
@@ -50,4 +52,4 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
   );
 };
 
-export default NavBar;
+export default withAuth(NavBar);

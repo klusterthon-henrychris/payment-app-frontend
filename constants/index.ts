@@ -6,7 +6,7 @@ import {
   IconPayments,
   IconSettings,
   IconType,
-  IconCatalogue
+  IconCatalogue,
 } from "@/components/svgs";
 
 type ISideBarItems = {

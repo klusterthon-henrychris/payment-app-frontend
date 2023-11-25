@@ -5,9 +5,15 @@ interface IDropdownMenu {
   menuItems: { title: string; onClick: (prop?: any) => void }[];
   title: ReactElement;
   id?: string;
+  menuItemsClassName?: string;
 }
 
-const DropdownMenu: React.FC<IDropdownMenu> = ({ title, menuItems, id }) => {
+const DropdownMenu: React.FC<IDropdownMenu> = ({
+  title,
+  menuItems,
+  id,
+  menuItemsClassName,
+}) => {
   return (
     <div className="relative inline-block text-left">
       <Menu>
@@ -28,7 +34,7 @@ const DropdownMenu: React.FC<IDropdownMenu> = ({ title, menuItems, id }) => {
             >
               <Menu.Items
                 static
-                className="absolute right-3 w-28 origin-top-right bg-white border rounded-md shadow-lg outline-none z-30"
+                className={`absolute right-3 w-28 origin-top-right bg-white border rounded-md shadow-lg outline-none z-50 ${menuItemsClassName}`}
               >
                 <div>
                   {menuItems.map((menuItem) => (

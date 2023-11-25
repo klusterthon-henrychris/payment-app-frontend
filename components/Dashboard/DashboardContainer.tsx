@@ -1,30 +1,47 @@
 import React from "react";
 import { CustomButton } from "@/components/common";
-import { featuredItems } from "@/constants";
-import { useUser } from "@/contexts/apiContext";
 import FeaturedBox from "./FeaturedBox";
 import Image from "next/image";
+import {
+  useGetTotalCatalogue,
+  useGetTotalClients,
+  useGetTotalInvoices,
+  useGetUser,
+} from "@/store/useApi";
+import AllClientsTable from "../clients/AllClientsTable";
+import { useRouter } from "next/navigation";
 
 const DashboardContainer: React.FC = () => {
-  const { user } = useUser();
-  // console.log(user, "user");
+  const { data: user } = useGetUser();
+  const clientCountData = useGetTotalClients();
+  const invoicesCountData = useGetTotalInvoices();
+  const catalogueCountData = useGetTotalCatalogue();
+
+  const router = useRouter();
 
   return (
     <div className="w-full min-h-screen bg-light-white flex flex-col p-6">
       <div className="flex justify-between items-center pb-1">
-        <p className="bold-title">Hi {user?.firstName} 👋</p>
+        <p className="bold-title">Hi {user?.firstName ?? ""} 👋</p>
         <CustomButton>+ Generate Invoice</CustomButton>
       </div>
 
       <div className="py-6 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-10">
-        {featuredItems.map((item) => (
-          <FeaturedBox
-            className="bg-white"
-            key={item.label}
-            label={item.label}
-            title={item.title}
-          />
-        ))}
+        <FeaturedBox
+          className="bg-white"
+          label="No. of Clients"
+          title={`${clientCountData?.data ?? 0}`}
+        />
+        <FeaturedBox
+          className="bg-white"
+          label="Catalogue Size"
+          title={`${catalogueCountData?.data ?? 0}`}
+        />
+        <FeaturedBox
+          className="bg-white"
+          label="Total No. of Invoices"
+          title={`${invoicesCountData?.data ?? 0}`}
+        />
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6 pb-6">
@@ -72,13 +89,16 @@ const DashboardContainer: React.FC = () => {
         </div>
       </div>
 
-      <div className="flex flex-row items-center justify-between mt-[24px]">
-        <div className="">
-          <div className="flex flex-row justify-between mt-[24px] ml-[24px] items-center bg-[#fff] py-5">
+      <div className="grid lg:grid-cols-2 gap-6 justify-between mt-6">
+        <div>
+          <div className="flex flex-row justify-between mt-[24px] items-center bg-[#fff] py-5">
             <p className="text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]">
-              Payment history
+              Clients
             </p>
-            <div className="flex flex-row mr-[24px] items-center gap-[4px]">
+            <div
+              className="flex flex-row mr-[24px] items-center gap-[4px] cursor-pointer"
+              onClick={() => router.push("/clients")}
+            >
               <p className="font-Satoshi text-[14px] font-medium text-[#008678]">
                 See all
               </p>
@@ -98,112 +118,18 @@ const DashboardContainer: React.FC = () => {
               </svg>
             </div>
           </div>
-          <div className="relative overflow-x-auto ml-[24px]">
-            <table className="w-[364px] text-sm text-left rtl:text-right text-gray-500 ">
-              <thead className="text-sm font-Satoshi font-bold text-[#1E1E1E] bg-[#F3F3F3] border-b-[1px] border-[#D9D9D9] h-[40px] w-full">
-                <tr>
-                  <th scope="col" className="px-6 py-3">
-                    #
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Client name
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Tx Number
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Date
-                  </th>
-                  <th scope="col" className="px-6 py-3">
-                    Amount
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr className="bg-white border-b">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    1
-                  </th>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    Esther Howard
-                  </th>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    4584879584
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    Nov 10, 2023
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    $250
-                  </td>
-                </tr>
-                <tr className="bg-white border-b">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    2
-                  </th>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    NCourtney Henry
-                  </th>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    4584879584
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    Nov 10, 2023
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    $250
-                  </td>
-                </tr>
-                <tr className="bg-white">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    3
-                  </th>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    Dianne Russell
-                  </th>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    4584879584
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    Nov 10, 2023
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    $250
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-          <div className="w-[364px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
-            <p className="mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]">
-              Showing 1-50 of 2000
-            </p>
-          </div>
+          <AllClientsTable showPagination={false} />
         </div>
-        <div className="mr-[24px]">
-          <div className="flex flex-row justify-between mt-[24px] ml-[24px] items-center bg-[#fff] py-5">
+
+        <div>
+          <div className="flex flex-row justify-between mt-[24px] items-center bg-[#fff] py-5">
             <p className="text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]">
               Invoices
             </p>
-            <div className="flex flex-row mr-[24px] items-center gap-[4px]">
+            <div
+              className="flex flex-row mr-[24px] items-center gap-[4px] cursor-pointer"
+              onClick={() => router.push("/invoices")}
+            >
               <p className="font-Satoshi text-[14px] font-medium text-[#008678]">
                 See all
               </p>
@@ -223,9 +149,9 @@ const DashboardContainer: React.FC = () => {
               </svg>
             </div>
           </div>
-          <div className="relative overflow-x-auto ml-[24px]">
-            <table className="w-[364px] text-sm text-left rtl:text-right text-gray-500 ">
-              <thead className="text-sm font-Satoshi font-bold text-[#1E1E1E] bg-[#F3F3F3] border-b-[1px] border-[#D9D9D9] h-[40px] w-full">
+          <div className="max-w-screen overflow-x-scroll overflow-y-visible">
+            <table className="w-[1100px] md:w-full min-h-[100px] text-sm text-left rtl:text-right text-gray-500 overflow-y-visible">
+              <thead className="text-sm font-bold border-b-[1px] border-[#D9D9D9] h-[45px] w-full">
                 <tr>
                   <th scope="col" className="px-6 py-3">
                     #
@@ -247,93 +173,52 @@ const DashboardContainer: React.FC = () => {
                   </th>
                 </tr>
               </thead>
+
               <tbody>
                 <tr className="bg-white border-b">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
+                  <td scope="row" className="px-6 py-4">
                     1
-                  </th>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    Nov 10, 2023
-                  </th>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    $250
                   </td>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
+                  <td scope="row" className="px-6 py-4">
                     Nov 10, 2023
                   </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    Leslie Alexander
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    -
-                  </td>
+                  <td className="px-6 py-4">$250</td>
+                  <td className="px-6 py-4">Nov 10, 2023</td>
+                  <td className="px-6 py-4">Leslie Alexander</td>
+                  <td className="px-6 py-4">-</td>
                 </tr>
                 <tr className="bg-white border-b">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
+                  <td scope="row" className="px-6 py-4">
                     2
-                  </th>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    Nov 10, 2023
-                  </th>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    $250
                   </td>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
+                  <td scope="row" className="px-6 py-4">
                     Nov 10, 2023
                   </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    Leslie Alexander
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    -
-                  </td>
+                  <td className="px-6 py-4">$250</td>
+                  <td className="px-6 py-4">Nov 10, 2023</td>
+                  <td className="px-6 py-4">Leslie Alexander</td>
+                  <td className="px-6 py-4">-</td>
                 </tr>
                 <tr className="bg-white">
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
+                  <td scope="row" className="px-6 py-4">
                     3
-                  </th>
-                  <th
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    Nov 10, 2023
-                  </th>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                    $250
                   </td>
-                  <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
+                  <td scope="row" className="px-6 py-4">
                     Nov 10, 2023
                   </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    Leslie Alexander
-                  </td>
-                  <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                    -
-                  </td>
+                  <td className="px-6 py-4">$250</td>
+                  <td className="px-6 py-4">Nov 10, 2023</td>
+                  <td className="px-6 py-4">Leslie Alexander</td>
+                  <td className="px-6 py-4">-</td>
                 </tr>
               </tbody>
             </table>
           </div>
-          <div className="w-[364px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
+          {/* <div className="w-[364px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
             <p className="mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]">
               Showing 1-50 of 2000
             </p>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
