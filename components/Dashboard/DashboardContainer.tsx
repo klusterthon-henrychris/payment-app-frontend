@@ -1,12 +1,13 @@
 import React from "react";
 import { CustomButton } from "@/components/common";
 import { featuredItems } from "@/constants";
-import { useUser } from "@/contexts/useApi";
+import { useUser } from "@/contexts/apiContext";
 import FeaturedBox from "./FeaturedBox";
+import Image from "next/image";
 
 const DashboardContainer: React.FC = () => {
   const { user } = useUser();
-  console.log(user, "user");
+  // console.log(user, "user");
 
   return (
     <div className="w-full min-h-screen bg-light-white flex flex-col p-6">
@@ -17,20 +18,26 @@ const DashboardContainer: React.FC = () => {
 
       <div className="py-6 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-10">
         {featuredItems.map((item) => (
-          <FeaturedBox key={item.label} label={item.label} title={item.title} />
+          <FeaturedBox
+            className="bg-white"
+            key={item.label}
+            label={item.label}
+            title={item.title}
+          />
         ))}
       </div>
 
       <div className="grid lg:grid-cols-3 gap-6 pb-6">
-        <div className="h-[400px] bg-white rounded-[8px] lg:col-span-2">
-          Sales trend
+        <div className="h-[344px] bg-white rounded-[8px] lg:col-span-2 title flex items-center justify-center">
+          {/* Sales trend */}
+          <Image src="/sales-trend.svg" alt="logo" width={760} height={344} />
         </div>
 
-        <div className="grid gap-6 h-[400px] rounded-[8px] bg-white p-6">
+        <div className="grid gap-6 h-[344px] rounded-[8px] bg-white p-6">
           <FeaturedBox
             label="Total Earnings"
             title=" $200,546"
-            className="bg-primary-soft h-[110px]"
+            className="bg-success-soft h-[110px]"
             labelClassName="text-neutral-black"
           />
           <FeaturedBox

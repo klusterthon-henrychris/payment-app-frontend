@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
-import { useUser } from "@/contexts/useApi";
+import { useUser } from "@/contexts/apiContext";
 
 interface INavBar {
   toggleSideBar: () => void;
@@ -12,9 +12,10 @@ interface INavBar {
 const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
   const { user } = useUser();
   const pathname = usePathname().slice(1);
+  const pageHead = pathname.split("/")[0];
 
   return (
-    <header className="w-full z-10 flex px-6 sticky bg-white top-0 h-20 items-center justify-between">
+    <header className="w-full z-10 flex px-6 bg-white h-20 items-center justify-between">
       <div className="flex items-center gap-4">
         <Image
           src="/icon-menu.svg"
@@ -24,7 +25,7 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
           onClick={toggleSideBar}
           className="lg:hidden"
         />
-        <p className="title">{pathname}</p>
+        <p className="title">{pageHead}</p>
       </div>
       <nav className="flex gap-6">
         <div className="flex items-center">

@@ -18,11 +18,11 @@
 }
 
 .title {
-  @apply font-bold text-lg capitalize;
+  @apply font-bold text-sm lg:text-lg capitalize;
 }
 
 .bold-title {
-  @apply font-bold text-[32px] text-neutral-black capitalize;
+  @apply font-bold text-lg lg:text-[32px] text-neutral-black capitalize;
 }
 
 .active-nav {
@@ -41,4 +41,11 @@ input,
 select,
 textarea {
   outline: none;
+}
+
+.spin-button-none::-webkit-inner-spin-button,
+.spin-button-none::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin: 0;
 }

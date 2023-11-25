@@ -1,7 +1,7 @@
 import { Metadata } from "next/types";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import AuthContextProvider from "@/contexts/useAuth";
+import AuthContextProvider from "@/store/useAuth";
 import ClientSideLayout from "@/components/common/ClientSideLayout";
 import "./globals.css";
 

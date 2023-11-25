@@ -1,9 +1,10 @@
 "use client";
 import React from "react";
-import Clients from "@/components/Clients/Client";
+import ClientsContainer from "@/components/clients/ClientsContainer";
+import withAuth from "@/utils/withAuth";
 
 const ClientsScreen: React.FC = () => {
-  return <Clients />;
+  return <ClientsContainer />;
 };
 
-export default ClientsScreen;
+export default withAuth(ClientsScreen);

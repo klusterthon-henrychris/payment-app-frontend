@@ -27,9 +27,6 @@ const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
   const [isRegistered, setIsRegistered] = useState(false);
   const router = useRouter();
 
-  const userData = localStorage.getItem("currentUser");
-  const user = userData ? JSON?.parse(userData) : null;
-
   const checkSession = () => {
     const token = localStorage.getItem("accessToken");
 
@@ -42,7 +39,7 @@ const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
 
   useEffect(() => {
     checkSession();
-  }, [userData]);
+  }, []);
 
   const providerValues = {
     isRegistered,

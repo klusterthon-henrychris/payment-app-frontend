@@ -7,10 +7,10 @@ interface ModalPopupPropType {
   isModalOpen: boolean;
   toggleModal: () => void;
   heading: string;
-  statement?: ReactElement;
+  statement?: ReactElement | null;
   handleSubmit?: () => void;
-  customBody?: ReactElement;
-  children?: ReactElement;
+  CustomBody?: ReactElement | null;
+  buttonText?: string | null;
 }
 
 const ModalPopup: React.FC<ModalPopupPropType> = ({
@@ -19,11 +19,9 @@ const ModalPopup: React.FC<ModalPopupPropType> = ({
   heading,
   statement,
   handleSubmit,
-  customBody,
-  children,
+  CustomBody,
+  buttonText,
 }) => {
-  console.log(customBody, "++++++++");
-
   return (
     <Transition appear show={isModalOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={toggleModal}>
@@ -55,8 +53,8 @@ const ModalPopup: React.FC<ModalPopupPropType> = ({
                   {heading}
                 </Dialog.Title>
                 <AddClientsForm handleSubmit={() => {}} />
-                {customBody ? (
-                  <>{children}</>
+                {CustomBody ? (
+                  <>{CustomBody}</>
                 ) : (
                   <>
                     {statement}
@@ -69,7 +67,9 @@ const ModalPopup: React.FC<ModalPopupPropType> = ({
                       >
                         Cancel
                       </button>
-                      <CustomButton onClick={handleSubmit}>Save</CustomButton>
+                      <CustomButton onClick={handleSubmit}>
+                        {buttonText ?? "Save"}
+                      </CustomButton>
                     </div>
                   </>
                 )}

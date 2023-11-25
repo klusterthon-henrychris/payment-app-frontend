@@ -28,6 +28,12 @@ const config: Config = {
         error: {
           DEFAULT: "#F44336",
         },
+        warning: {
+          soft: "#FFF6DA",
+        },
+        success: {
+          soft: "#DCF7ED",
+        },
       },
     },
   },
