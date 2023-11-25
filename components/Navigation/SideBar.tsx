@@ -25,7 +25,9 @@ const SideBar: React.FC<ISideBar> = ({ mobileSideBarOpen }) => {
       } lg:block`}
     >
       <div className="h-20 flex items-center">
-        <Image src="/logo-light.svg" alt="logo" width={208} height={32} />
+        <Link href="/">
+          <Image src="/logo-light.svg" alt="logo" width={208} height={32} />{" "}
+        </Link>
       </div>
 
       <div className="flex-grow flex flex-col justify-between h-full">

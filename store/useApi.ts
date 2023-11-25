@@ -12,6 +12,9 @@ import {
   addClient,
   getAllClients,
   getClientById,
+  getTotalCatalogue,
+  getTotalClients,
+  getTotalInvoices,
   getUser,
   updateClient,
 } from "@/contexts/apiContext";
@@ -21,6 +24,9 @@ export const queryKeys = {
   getUser: "getUser",
   getAllClients: "getAllClients",
   getClientById: "getClientById",
+  getTotalClients: "getTotalClients",
+  getTotalInvoices: "getTotalInvoices",
+  getTotalCatalogue: "getTotalCatalogue",
 };
 
 export type StatusAndMessageResponse = {
@@ -70,6 +76,34 @@ export const useGetAllClients = (
   );
 
   return res?.data ?? initialData;
+};
+
+export const useGetTotalClients = (
+  options?: UseQueryOptions<UseGetAllClientsReturn, StatusAndMessageResponse>
+): UseQueryResult<UseGetAllClientsReturn, StatusAndMessageResponse> => {
+  const res = useQuery([queryKeys.getTotalClients], getTotalClients, {
+    // refetchOnWindowFocus: true,
+  });
+
+  return res?.data;
+};
+
+export const useGetTotalInvoices = (
+  options?: UseQueryOptions<UseGetAllClientsReturn, StatusAndMessageResponse>
+): UseQueryResult<UseGetAllClientsReturn, StatusAndMessageResponse> => {
+  const res = useQuery([queryKeys.getTotalInvoices], getTotalInvoices, {
+    // refetchOnWindowFocus: true,
+  });
+
+  return res?.data;
+};
+
+export const useGetTotalCatalogue = (
+  options?: UseQueryOptions<UseGetAllClientsReturn, StatusAndMessageResponse>
+): UseQueryResult<UseGetAllClientsReturn, StatusAndMessageResponse> => {
+  const res = useQuery([queryKeys.getTotalCatalogue], getTotalCatalogue);
+
+  return res?.data;
 };
 
 export const useGetClientById = (

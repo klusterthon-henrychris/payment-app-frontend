@@ -21,7 +21,13 @@ const tableHeads = [
   "Billing address",
 ];
 
-const AllClientsTable: React.FC = () => {
+interface IAllClientsTable {
+  showPagination?: boolean;
+}
+
+const AllClientsTable: React.FC<IAllClientsTable> = ({
+  showPagination = true,
+}) => {
   const router = useRouter();
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
@@ -76,8 +82,6 @@ const AllClientsTable: React.FC = () => {
     refetchAllClients();
   }, [pageNumber]);
 
-  console.log(pageNumber, "from clients");
-
   const menuItems = [
     {
       title: "View",
@@ -107,7 +111,7 @@ const AllClientsTable: React.FC = () => {
           </tr>
         </thead>
 
-        <tbody className="overflow-y-visible">
+        <tbody>
           {clientsLoading || !clientsData?.items ? (
             <tr className="flex items-center justify-center h-[300px] w-full">
               <p className="bold-title">Loading...</p>
@@ -149,27 +153,29 @@ const AllClientsTable: React.FC = () => {
         </tbody>
       </table>
 
-      <div className="w-[150px] flex items-center m-auto justify-center mt-3">
-        <button
-          disabled={clientsData?.hasPrevious}
-          className="mx-auto font-medium text-neutral-black text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handlePrevPageClick}
-        >
-          <HiOutlineChevronLeft />
-        </button>
-        <p className="mx-auto font-medium text-neutral-black text-sm">
-          Showing {clientsData?.currentPage}-
-          {(clientsData?.currentPage ?? 1) * 10} of{" "}
-          {clientsData?.totalCount ?? 1}
-        </p>
-        <button
-          className="mx-auto font-medium text-neutral-black text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-          onClick={handleNextPageClick}
-          disabled={clientsData?.hasNext}
-        >
-          <HiOutlineChevronRight />
-        </button>
-      </div>
+      {showPagination && (
+        <div className="w-[150px] flex items-center m-auto justify-center mt-3">
+          <button
+            disabled={!clientsData?.hasPrevious}
+            className="mx-auto font-medium text-neutral-black text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handlePrevPageClick}
+          >
+            <HiOutlineChevronLeft />
+          </button>
+          <p className="mx-auto font-medium text-neutral-black text-sm">
+            Showing {clientsData?.currentPage}-
+            {(clientsData?.currentPage ?? 1) * 10} of{" "}
+            {clientsData?.totalCount ?? 1}
+          </p>
+          <button
+            className="mx-auto font-medium text-neutral-black text-sm cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+            onClick={handleNextPageClick}
+            disabled={!clientsData?.hasNext}
+          >
+            <HiOutlineChevronRight />
+          </button>
+        </div>
+      )}
 
       <ModalPopup
         isModalOpen={editModalOpen}
