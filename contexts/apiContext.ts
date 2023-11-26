@@ -48,6 +48,7 @@ export const getTotalCatalogue = async (): Promise<any> => {
 
 export const getClientById = async (clientId: string) => {
   const res = await api.get(`clients/${clientId}`);
+  if(res?.data)
   return res.data;
 };
 

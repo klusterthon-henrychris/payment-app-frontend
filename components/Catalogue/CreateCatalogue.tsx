@@ -63,7 +63,7 @@ const CreateCatalogue = () => {
       toast.warn('Please select a file before creating a catalogue.');
     }
   }
-  console.log(name, type, description, price, quantity, previewURL)
+
   return (
     <div className='flex'>
       <button className="ml-auto bg-[#008678] text-[#fff] rounded-[8px] p-3 mt-[24px] mr-[24px]" onClick={toggleModel}>
@@ -105,7 +105,6 @@ const CreateCatalogue = () => {
               <select style={{ textIndent: "16px" }} placeholder='Select type' className='w-[380px] h-[40px] rounded-[8px] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder:text-[#9A9A9A]' onChange={(event) => setType(event.target.value)}>
                 <option>Select type</option>
                 <option>Physical</option>
-                <option>Service</option>
                 <option>Digital</option>
               </select>
             </div>
@@ -126,7 +125,7 @@ const CreateCatalogue = () => {
               <label className='text-[#1E1E1E] text-[10px] font-bold font-Satoshi'>Quantity</label>
               <div className='flex flex-row gap-[4px]'>
                 <select style={{ textIndent: "16px" }} className='w-[84px] h-[40px] rounded-[8px] bg-[#9A9A9A] text-[#fff] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder-[#9A9A9A] text-[#000]'>
-                  <option disabled selected>Limited</option>
+                  <option>Limited</option>
                 </select>
                 <input style={{ textIndent: "16px" }} placeholder='0' className='w-[292px] h-[40px] rounded-[8px] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder:text-[#9A9A9A]' onChange={(event) => setQuantity(parseFloat(event.target.value))} />
               </div>

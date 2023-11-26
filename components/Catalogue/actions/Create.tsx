@@ -17,7 +17,7 @@ export async function createCatalogue(Name: string, ProductType: string, Descrip
             throw new Error("Error has occurred");
         }
     } catch (err: any) {
-        console.error(err);
+        console.error("Errrror:",err);
         toast.error(
             `Error getting user: ${err?.response?.data?.errors[0]?.description}`
         );

@@ -2,8 +2,10 @@
 import React, { useState } from 'react'
 import DeleteCatalogue from './DeleteCatalogue'
 import ShareCatalogue from './ShareCatalogue'
-
-const CatalogueOptions = () => {
+interface CatalogueProps {
+  catalogueId: string
+}
+const CatalogueOptions = ({ catalogueId }: CatalogueProps) => {
   const [isOptionsBoxOpen, setIsOptionsBoxOpen] = useState(false)
   const [optionValue, setOptionValue] = useState("")
   const options = ['View', 'Edit', 'Duplicate', 'Share', 'Delete']
@@ -32,7 +34,7 @@ const CatalogueOptions = () => {
           ))}
         </div>
       )}
-      {optionValue === "Delete" && <DeleteCatalogue params={{ open: optionValue, close: closeOptionClick }} />}
+      {optionValue === "Delete" && <DeleteCatalogue params={{ open: optionValue, close: closeOptionClick, catalogueId: catalogueId }} />}
       {optionValue === "Share" && <ShareCatalogue params={{ open: optionValue, close: closeOptionClick }} />}
     </div>
   )

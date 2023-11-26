@@ -1,8 +1,27 @@
-import React from 'react'
+"use client"
+import React,{useState} from 'react'
+import api from "@/utils/api";
+import { toast } from "react-toastify";
+
 interface OptionProps {
-    params: { open: string, close: () => void }
+    params: { open: string, close: () => void, catalogueId: string }
 }
-const DeleteCatalogue = ({ params: { open, close } }: OptionProps) => {
+const DeleteCatalogue = ({ params: { open, close, catalogueId } }: OptionProps) => {
+    const deleteCatalogue = async () => {
+        try {
+          const res = await api.get(`products/:${catalogueId}`);
+          if (res?.data?.success) {
+            console.log("res:", res?.data);
+          } else {
+            throw new Error("Error has occurred");
+          }
+        } catch (err: any) {
+          console.error(err);
+          toast.error(
+            `Error getting user: ${err?.response?.data?.errors[0]?.description}`
+          );
+        }
+      };
     return (
         <div className='flex absolute'>
             {open && <div style={{
@@ -34,7 +53,7 @@ const DeleteCatalogue = ({ params: { open, close } }: OptionProps) => {
                         </div>
                         <div className='flex flex-row justify-between mt-[24px]'>
                             <button className='ml-[24px] absolute bottom-[24px] text-[#1E1E1E] font-Satoshi text-[14px] font-medium' onClick={close}>Cancel</button>
-                            <button className='absolute bottom-[24px] right-[24px] w-20 h-10 rounded-[8px] p-2.5 bg-[#F44336] text-[#fff] font-Satoshi text-[14px] font-medium' >Delete</button>
+                            <button className='absolute bottom-[24px] right-[24px] w-20 h-10 rounded-[8px] p-2.5 bg-[#F44336] text-[#fff] font-Satoshi text-[14px] font-medium' onClick={deleteCatalogue}>Delete</button>
                         </div>
                     </div>
                 </figure>
