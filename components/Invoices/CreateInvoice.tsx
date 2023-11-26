@@ -34,6 +34,7 @@ const CreateInvoice = () => {
     }
     getSearchProducts()
   }, [])
+
   useEffect(() => {
     if (isModelOpen) {
       document.body.style.overflow = 'hidden';
@@ -44,9 +45,11 @@ const CreateInvoice = () => {
       document.body.style.overflow = 'unset';
     };
   }, [isModelOpen]);
+
   useEffect(() => {
     calculateTotalPrice();
   }, [selectedItems]);
+
   const toggleModel = () => {
     setIsModelOpen(!isModelOpen)
   }
@@ -107,7 +110,6 @@ const CreateInvoice = () => {
           </button>
         </div>
         <div className='flex flex-row items-center ml-[24px] mt-[24px]'>
-
           <form className="flex items-center">
             <label className="sr-only">Search</label>
             <div className="relative w-full">
@@ -159,7 +161,6 @@ const CreateInvoice = () => {
           <button className='absolute bottom-[24px] right-[24px] w-20 h-10 rounded-[8px] p-2.5 bg-[#008678] text-[#fff] font-Satoshi text-[14px] font-medium' onClick={handleNextPageClick}>Next</button>
         </div>
       </figure>}
-        {/* {modelContent === 2 && amount && <div className='flex flex-row gap-[24px] justify-center'><InvoicePdf /><SendInvoice close={closeModel} amount={amount} invoiceItems={selectedItems}/></div>} */}
         {modelContent === 2 && amount && (
           <div className='flex flex-row gap-[24px] justify-center'>
             <InvoicePdf />
