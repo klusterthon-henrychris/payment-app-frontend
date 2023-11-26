@@ -2,9 +2,9 @@
 import React, { useState, useEffect } from 'react'
 import { getAllClients, getClientById } from '@/contexts/apiContext';
 import { error } from 'console';
-import { createInvoice } from './action/Create';
-import { getBusinessOfLoggedInUser } from './action/GetBusinessOfLoggedInUser';
-import { getClientsById } from './action/GetClientsById';
+import { createInvoice } from './invoiceAction/Create';
+import { getBusinessOfLoggedInUser } from './invoiceAction/GetBusinessOfLoggedInUser';
+import { getClientsById } from './invoiceAction/GetClientsById';
 interface InvoiceProps {
   close: () => void;
   amount: number;

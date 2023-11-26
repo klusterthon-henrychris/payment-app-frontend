@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import { searchProducts } from './action/SearchProducts'
+import { searchProducts } from './invoiceAction/SearchProducts'
 import Image from 'next/image'
 import { CatalogueItem } from '../Catalogue/Catalogue'
 import InvoicePdf from './InvoicePdf'
