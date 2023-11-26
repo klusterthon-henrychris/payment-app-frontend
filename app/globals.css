@@ -46,6 +46,7 @@ input,
 select,
 textarea {
   outline: none;
+  text-indent: 1rem;
 }
 
 input:disabled {

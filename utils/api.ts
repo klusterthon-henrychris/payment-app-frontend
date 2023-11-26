@@ -1,5 +1,6 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
+import { redirect } from "next/navigation";
 
 const instance = axios.create({ baseURL: "http://localhost:5000/api/" });
 
@@ -18,6 +19,7 @@ instance.interceptors.request.use(
     const decodedData = token && jwtDecode(token);
     if (decodedData && (decodedData?.exp as any) < Date.now() / 1000) {
       localStorage.clear();
+      redirect("/sign-in");
     }
 
     return config;

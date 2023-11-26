@@ -56,7 +56,7 @@ const LoginContainer: React.FC = () => {
       <div className="lg:w-[350px] p-4 lg:px-0 m-auto flex flex-col items-center justify-center">
         <div>
           <p className="bold-title">Welcome to Simple Biz</p>
-          <p className="paragraph mt-2 ml-1">Please sign to continue</p>
+          <p className="paragraph mt-3 ml-1">Please sign to continue</p>
         </div>
 
         <Formik initialValues={initialValues} onSubmit={handleSubmit}>
