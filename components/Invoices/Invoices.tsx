@@ -96,7 +96,11 @@ function Invoices() {
                                 <td>
                                     <input type="checkbox" className='ml-4' />
                                 </td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{new Date(item.dueDate).toLocaleDateString()}</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{new Date(item.dueDate).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })}</td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.invoiceNo}</td>
                                 <td>-</td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.amount}</td>
