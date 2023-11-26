@@ -11,14 +11,18 @@ import {
   AddClientPostBody,
   addClient,
   getAllClients,
+  getBusinessDetail,
   getClientById,
   getTotalCatalogue,
   getTotalClients,
   getTotalInvoices,
   getUser,
+  updateBusiness,
   updateClient,
+  updateUser,
 } from "@/contexts/apiContext";
 import { AddClientsFormValues } from "@/components/clients/AddClientsForm";
+import { BusinessSignUpFormValues } from "@/components/auth/BusinessSignUpForm";
 
 export const queryKeys = {
   getUser: "getUser",
@@ -27,6 +31,7 @@ export const queryKeys = {
   getTotalClients: "getTotalClients",
   getTotalInvoices: "getTotalInvoices",
   getTotalCatalogue: "getTotalCatalogue",
+  getBusinessDetail: "getBusinessDetail",
 };
 
 export type StatusAndMessageResponse = {
@@ -37,6 +42,58 @@ export const useGetUser = (
   options?: UseQueryOptions<AddClientsFormValues, StatusAndMessageResponse>
 ): UseQueryResult<AddClientsFormValues, StatusAndMessageResponse> => {
   const res = useQuery([queryKeys.getUser], getUser, {
+    staleTime: Infinity,
+    refetchOnWindowFocus: false,
+  });
+  return res?.data ?? {};
+};
+
+export const useUpdateUser = (
+  options?: UseMutationOptions<
+    StatusAndMessageResponse,
+    StatusAndMessageResponse,
+    any
+  >
+): UseMutationResult<
+  StatusAndMessageResponse,
+  StatusAndMessageResponse,
+  any
+> => {
+  return useMutation((postBody) => updateUser(postBody), {
+    ...options,
+    onError: (error: any) => toast.error("Error has occurred"),
+  });
+};
+
+export const useUpdateBusiness = (
+  options?: UseMutationOptions<
+    StatusAndMessageResponse,
+    StatusAndMessageResponse,
+    any
+  >
+): UseMutationResult<
+  StatusAndMessageResponse,
+  StatusAndMessageResponse,
+  any
+> => {
+  return useMutation((postBody) => updateBusiness(postBody), {
+    ...options,
+    onError: (error: any) => toast.error("Error has occurred"),
+  });
+};
+
+export type BusinessSignUpRes = {
+  address: string;
+  name: string;
+  rcNumber: string;
+  industry: string;
+  description: string;
+};
+
+export const useGetBusinessDetail = (
+  options?: UseQueryOptions<BusinessSignUpRes, StatusAndMessageResponse>
+): UseQueryResult<BusinessSignUpRes, StatusAndMessageResponse> => {
+  const res = useQuery([queryKeys.getBusinessDetail], getBusinessDetail, {
     staleTime: Infinity,
     refetchOnWindowFocus: false,
   });

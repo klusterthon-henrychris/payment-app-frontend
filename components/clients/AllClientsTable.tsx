@@ -114,11 +114,11 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
         <tbody>
           {clientsLoading || !clientsData?.items ? (
             <tr className="flex items-center justify-center h-[300px] w-full">
-              <p className="bold-title">Loading...</p>
+              <p className="title">Loading...</p>
             </tr>
           ) : clientsData?.items?.length < 1 ? (
             <tr className="flex items-center justify-center h-[300px] w-full">
-              <p className="bold-title">Nothing to show here</p>
+              <p className="title">No clients yet...</p>
             </tr>
           ) : (
             <>

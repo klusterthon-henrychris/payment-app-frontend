@@ -46,6 +46,9 @@ input,
 select,
 textarea {
   outline: none;
+}
+
+input[type="number"] {
   text-indent: 1rem;
 }
 

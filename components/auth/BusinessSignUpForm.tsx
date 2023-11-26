@@ -9,12 +9,13 @@ export type BusinessSignUpFormValues = {
   rcNumber: string;
   industry: string;
   businessDescription: string;
-  cacNumber: string;
-  policy: string;
+  cacNumber?: string;
+  policy?: string;
 };
 
 interface IBusinessSignUpForm {
   handleSubmit: (values: BusinessSignUpFormValues) => void;
+  oldValues?: BusinessSignUpFormValues;
 }
 
 const initialValues: BusinessSignUpFormValues = {
@@ -29,9 +30,13 @@ const initialValues: BusinessSignUpFormValues = {
 
 const BusinessSignUpForm: React.FC<IBusinessSignUpForm> = ({
   handleSubmit,
+  oldValues,
 }) => {
   return (
-    <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+    <Formik
+      initialValues={oldValues ? oldValues : initialValues}
+      onSubmit={handleSubmit}
+    >
       {({ values, setFieldValue }: FormikProps<BusinessSignUpFormValues>) => {
         const disabled = Object.values(values).some((value) => value === "");
 
@@ -78,20 +83,22 @@ const BusinessSignUpForm: React.FC<IBusinessSignUpForm> = ({
                   <option value="Tech">Tech</option>
                 </Field>
               </div>
-              <div className="flex items-start gap-2">
-                <Field
-                  type="checkbox"
-                  name="policy"
-                  className="border rounded-sm h-[16px] w-[16px]"
-                  checked={isChecked}
-                  onChange={() =>
-                    setFieldValue("policy", isChecked ? "" : "Yes")
-                  }
-                />
-                <p className="text-neutral-black text-xs">
-                  By signing up you accept our Terms and Privacy policy
-                </p>
-              </div>
+              {!oldValues && (
+                <div className="flex items-start gap-2">
+                  <Field
+                    type="checkbox"
+                    name="policy"
+                    className="border rounded-sm h-[16px] w-[16px]"
+                    checked={isChecked}
+                    onChange={() =>
+                      setFieldValue("policy", isChecked ? "" : "Yes")
+                    }
+                  />
+                  <p className="text-neutral-black text-xs">
+                    By signing up you accept our Terms and Privacy policy
+                  </p>
+                </div>
+              )}
 
               <CustomButton type="submit" disabled={disabled}>
                 Continue
