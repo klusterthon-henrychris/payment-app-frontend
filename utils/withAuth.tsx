@@ -1,8 +1,9 @@
 "use client";
 import { useLayoutEffect } from "react";
 import { redirect } from "next/navigation";
+import { unprotectedRoutes } from "@/components/common/ClientSideLayout";
 
-export default function withAuth(Component: React.FC) {
+export default function withAuth(Component: React.FC, pathname: string) {
   return function WithAuth(props: any) {
     const getIsAuthenticated =
       typeof window !== "undefined"
@@ -12,7 +13,7 @@ export default function withAuth(Component: React.FC) {
 
     useLayoutEffect(() => {
       if (!session) {
-        redirect("/sign-in");
+        unprotectedRoutes.includes(pathname) && redirect("/sign-in");
       }
     }, []);
 

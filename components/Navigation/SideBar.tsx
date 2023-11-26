@@ -20,7 +20,7 @@ const SideBar: React.FC<ISideBar> = ({ mobileSideBarOpen }) => {
 
   return (
     <div
-      className={`h-full px-5 ${
+      className={`min-h-screen px-5 bg-white ${
         mobileSideBarOpen ? "block" : "hidden"
       } lg:block`}
     >
@@ -49,7 +49,7 @@ const SideBar: React.FC<ISideBar> = ({ mobileSideBarOpen }) => {
             );
           })}
         </div>
-        <div className="h-20 flex items-center shadow-lg rounded-lg px-3">
+        <div className="h-20 flex items-center shadow-lg rounded-lg px-3 bg-white">
           <div className="flex items-center flex-col justify-center">
             <Image src="/logo-light.svg" alt="logo" width={208} height={32} />
             <p>{user?.emailAddress ?? ""}</p>
@@ -72,4 +72,4 @@ const SideBar: React.FC<ISideBar> = ({ mobileSideBarOpen }) => {
   );
 };
 
-export default withAuth(SideBar);
+export default withAuth(SideBar, "/");

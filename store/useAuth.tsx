@@ -1,18 +1,8 @@
 "use client";
-import {
-  createContext,
-  Dispatch,
-  FC,
-  ReactNode,
-  SetStateAction,
-  useContext,
-  useEffect,
-  useState,
-} from "react";
+import { createContext, FC, ReactNode, useContext, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { usePathname, useRouter } from "next/navigation";
-import { useGetUser } from "./useApi";
-import { AddClientsFormValues } from "@/components/clients/AddClientsForm";
+import { unprotectedRoutes } from "@/components/common/ClientSideLayout";
 
 interface AuthContextProvider {
   children: ReactNode;
@@ -25,11 +15,10 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
-  // const user = data ?? ({} as AddClientsFormValues);
 
   const signOut = () => {
     localStorage.clear();
-    router.push("/sign-in");
+    !unprotectedRoutes.includes(pathname) && router.push("/sign-in");
   };
 
   const checkSession = () => {

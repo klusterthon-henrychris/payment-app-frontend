@@ -180,7 +180,7 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
       <ModalPopup
         isModalOpen={editModalOpen}
         toggleModal={() => setEditModalOpen(false)}
-        heading="Edit client info?"
+        heading="Edit client info"
         CustomBody={
           <AddClientsForm
             handleSubmit={handleEditInfo}

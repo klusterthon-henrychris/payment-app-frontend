@@ -5,7 +5,8 @@ interface InputGroupProps {
   name: string;
   type?: string;
   label: string;
-  placeholder: string;
+  placeholder?: string;
+  disabled?: boolean;
 }
 
 export const InputGroup: React.FC<InputGroupProps> = ({
@@ -13,6 +14,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
   type = "text",
   label,
   placeholder,
+  disabled,
 }) => {
   return (
     <div className="flex flex-col w-full gap-1">
@@ -22,6 +24,7 @@ export const InputGroup: React.FC<InputGroupProps> = ({
         type={type}
         className="border rounded-lg h-10 px-4"
         placeholder={placeholder}
+        disabled={disabled}
       />
     </div>
   );

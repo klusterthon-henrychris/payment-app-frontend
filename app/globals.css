@@ -12,6 +12,11 @@
   color: #1e1e1e;
 }
 
+main,
+body {
+  background-color: #fff;
+}
+
 /* START: General styles */
 .max-width {
   @apply max-w-[1440px] mx-auto;
@@ -41,6 +46,10 @@ input,
 select,
 textarea {
   outline: none;
+}
+
+input:disabled {
+  background-color: #f3f3f3;
 }
 
 .spin-button-none::-webkit-inner-spin-button,
