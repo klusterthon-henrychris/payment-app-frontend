@@ -58,12 +58,23 @@ const CreateInvoice = () => {
     setModelContent(1)
     setSelectedItems({})
   }
-  // Function to update the quantity for a specific product
+
   const updateQuantity = (productId: string, increment: number) => {
     setQuantities((prevQuantities) => ({
       ...prevQuantities,
       [productId]: Math.max(0, prevQuantities[productId] + increment), // Ensure quantity is not negative
     }));
+
+    // If the item is selected, update the quantity in selectedItems
+    if (selectedItems[productId]) {
+      setSelectedItems((prevSelectedItems) => ({
+        ...prevSelectedItems,
+        [productId]: {
+          ...prevSelectedItems[productId],
+          quantity: Math.max(0, prevSelectedItems[productId].quantity + increment),
+        },
+      }));
+    }
   };
 
   const calculateTotalPrice = () => {
@@ -78,6 +89,7 @@ const CreateInvoice = () => {
   const handleNextPageClick = () => {
     setModelContent((prev) => prev + 1)
   }
+
   return (
     <div className='flex'>
       <button className="ml-auto bg-[#008678] text-[#fff] rounded-[8px] p-3 mt-[24px] mr-[24px]" onClick={toggleModel}>
@@ -145,14 +157,14 @@ const CreateInvoice = () => {
               }} />
               <Image src={item.imageUrl} height={50} width={50} alt={`Product: ${item.name}`} />
               <div className='flex flex-col items-center'>
-                <p>{item.name}</p>
-                <p>{item.price}</p>
+                <p className='font-Satoshi text-[14px] text-[#1E1E1E] font-normal'>{item.name}</p>
+                <p className='font-Satoshi text-[14px] text-[#1E1E1E] font-medium'>₦{item.price}</p>
               </div>
             </div>
             <div className='flex flex-row items-center mr-[24px] gap-[8px]'>
-              <button onClick={() => updateQuantity(item.id, -1)}>-</button>
-              <input id="quantity" placeholder='0' type="number" value={quantities[item.id]} onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 0)} style={{ textIndent: "16px" }} className="w-[56px] h-[40px] py-6 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px] outline-none placeholder:text-[14px] placeholder:font-normal placeholder:text-[#9A9A9A]" required />
-              <button onClick={() => updateQuantity(item.id, 1)}>+</button>
+              <button onClick={() => updateQuantity(item.id, -1)} className='text-[24px]'>-</button>
+              <input id="quantity" type="number" readOnly value={quantities[item.id]} onChange={(e) => updateQuantity(item.id, parseInt(e.target.value) || 0)} style={{ textIndent: "20px" }} className="w-[56px] h-[40px] py-6 font-Satoshi text-[#9A9A9A] border border-[1px] border-[#D9D9D9] rounded-[8px] outline-none" required />
+              <button onClick={() => updateQuantity(item.id, 1)} className='text-[24px]'>+</button>
             </div>
           </div>
         ))}
@@ -164,10 +176,10 @@ const CreateInvoice = () => {
         {modelContent === 2 && amount && (
           <div className='flex flex-row gap-[24px] justify-center'>
             <InvoicePdf />
-            <SendInvoice close={closeModel} amount={amount} invoiceItems={selectedItems} />
+            <SendInvoice close={closeModel} setModelContent={setModelContent} amount={amount} invoiceItems={selectedItems} />
           </div>
         )}
-        {modelContent === 3 && <InvoiceSent open={isModelOpen} close={closeModel} />}
+        {modelContent === 3 && <div className='flex justify-center items-center h-screen'><InvoiceSent close={closeModel} /></div>}
       </div>}
     </div>
   )

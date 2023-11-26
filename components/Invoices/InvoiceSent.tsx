@@ -1,14 +1,17 @@
 import React from 'react'
 interface InvoiceProps {
-    open: boolean;
     close: () => void
 }
-const InvoiceSent = ({ open, close }: InvoiceProps) => {
+const InvoiceSent = ({ close }: InvoiceProps) => {
+    const goHome=()=>{
+        window.location.reload()
+        close()
+    }
     return (
         <div className='w-[428px] h-[490px] bg-[#fff] rounded-[8px] border border-[1px] border-black flex flex-col'>
             <div className='flex flex-row justify-between'>
                 <p className='text-[16px] font-Satoshi text-[#000] font-bold ml-[24px] mt-[24px]'>Generate invoice</p>
-                <button className='mr-[24px]'>
+                <button className='mr-[24px]' onClick={close}>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M12 22.75C6.07 22.75 1.25 17.93 1.25 12C1.25 6.07 6.07 1.25 12 1.25C17.93 1.25 22.75 6.07 22.75 12C22.75 17.93 17.93 22.75 12 22.75ZM12 2.75C6.9 2.75 2.75 6.9 2.75 12C2.75 17.1 6.9 21.25 12 21.25C17.1 21.25 21.25 17.1 21.25 12C21.25 6.9 17.1 2.75 12 2.75Z" fill="#1E1E1E" />
                         <path d="M9.17011 15.58C8.98011 15.58 8.79011 15.51 8.64011 15.36C8.35011 15.07 8.35011 14.59 8.64011 14.3L14.3001 8.63999C14.5901 8.34999 15.0701 8.34999 15.3601 8.63999C15.6501 8.92999 15.6501 9.40998 15.3601 9.69998L9.70011 15.36C9.56011 15.51 9.36011 15.58 9.17011 15.58Z" fill="#1E1E1E" />
@@ -32,7 +35,7 @@ const InvoiceSent = ({ open, close }: InvoiceProps) => {
                     <p>Your client should receive the details associated</p>
                     <p>in their attached email address.</p>
                 </div>
-                <button className='w-[380px] h-10 rounded-[8px] p-2.5 bg-[#008678] text-[#fff] font-Satoshi text-[14px] font-medium'>Go home</button>
+                <button className='w-[380px] h-10 rounded-[8px] p-2.5 bg-[#008678] text-[#fff] font-Satoshi text-[14px] font-medium' onClick={goHome}>Go home</button>
             </div>
         </div>
     )
