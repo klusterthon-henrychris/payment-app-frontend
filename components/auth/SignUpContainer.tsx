@@ -20,19 +20,19 @@ const SignUpContainer: React.FC = () => {
     try {
       const res = await api.post("auth/register", values);
       if (res?.data?.success) {
-        // setIsUserSignUp(false);
+        setIsUserSignUp(false);
         await localStorage.setItem("accessToken", res.data.data.accessToken);
-        toast.success(
-          <div>
-            <p>Signed up successfully</p>
-            <p>
-              Please confirm your email and{" "}
-              <Link href="/sign-in" className="text-primary font-semibold">
-                Sign in
-              </Link>
-            </p>
-          </div>
-        );
+        // toast.success(
+        //   <div>
+        //     <p>Signed up successfully</p>
+        //     <p>
+        //       Please confirm your email and{" "}
+        //       <Link href="/sign-in" className="text-primary font-semibold">
+        //         Sign in
+        //       </Link>
+        //     </p>
+        //   </div>
+        // );
       } else {
         throw new Error("Error has occurred");
       }
@@ -53,9 +53,19 @@ const SignUpContainer: React.FC = () => {
       if (res?.data?.success) {
         localStorage.setItem("authenticated", "true");
 
-        // setIsUserSignUp(true);
-        toast.success("Registered successfully");
-        // router.replace("/dashboard");
+        setIsUserSignUp(true);
+        toast.success(
+          <div>
+            <p>Registered successfully</p>
+            <p>
+              Please confirm your email and{" "}
+              <Link href="/sign-in" className="text-primary font-semibold">
+                Sign in
+              </Link>
+            </p>
+          </div>
+        );
+        router.replace("/sign-in");
       } else {
         throw new Error("Error has occurred");
       }
@@ -90,7 +100,7 @@ const SignUpContainer: React.FC = () => {
           </p>
         </div>
 
-        {/* <SignUpProgressBar isUserSignUp={isUserSignUp} /> */}
+        <SignUpProgressBar isUserSignUp={isUserSignUp} />
 
         {isUserSignUp ? (
           <UserSignUpForm handleSubmit={handleSubmit} />

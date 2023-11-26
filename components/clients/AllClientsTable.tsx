@@ -100,58 +100,56 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
 
   return (
     <div className="max-w-screen overflow-x-scroll overflow-y-visible">
-      <table className="w-[1100px] md:w-full min-h-[100px] text-sm text-left rtl:text-right text-gray-500 overflow-y-visible">
-        <thead className="text-sm font-bold border-b-[1px] border-[#D9D9D9] h-[45px] w-full">
-          <tr>
-            {tableHeads.map((headTitle) => (
-              <th key={headTitle} scope="col" className="px-6 py-3">
-                {headTitle}
-              </th>
-            ))}
-          </tr>
-        </thead>
+      {clientsLoading || !clientsData?.items ? (
+        <div className="flex items-center justify-center h-[200px] w-full bg-white mt-2">
+          <p className="title mt-10">Loading...</p>
+        </div>
+      ) : clientsData?.items?.length < 1 ? (
+        <div className="flex items-center justify-center h-[200px] w-full bg-white mt-2">
+          <p className="title mt-10">No clients yet</p>
+        </div>
+      ) : (
+        <table className="w-[1100px] md:w-full min-h-[100px] text-sm text-left rtl:text-right text-gray-500 overflow-y-visible">
+          <thead className="text-sm font-bold border-b-[1px] border-[#D9D9D9] h-[45px] w-full">
+            <tr>
+              {tableHeads.map((headTitle) => (
+                <th key={headTitle} scope="col" className="px-6 py-3">
+                  {headTitle}
+                </th>
+              ))}
+            </tr>
+          </thead>
 
-        <tbody>
-          {clientsLoading || !clientsData?.items ? (
-            <tr className="flex items-center justify-center h-[300px] w-full">
-              <p className="bold-title">Loading...</p>
-            </tr>
-          ) : clientsData?.items?.length < 1 ? (
-            <tr className="flex items-center justify-center h-[300px] w-full">
-              <p className="bold-title">Nothing to show here</p>
-            </tr>
-          ) : (
-            <>
-              {clientsData?.items &&
-                clientsData?.items?.map((client, i) => {
-                  return (
-                    <tr
-                      key={client.emailAddress + i}
-                      className="bg-white border-b"
-                    >
-                      <td scope="row" className="px-6 py-4">
-                        {i + 1}
-                      </td>
-                      <td scope="row" className="px-6 py-4">
-                        {`${client.firstName} ${client.lastName}`}
-                      </td>
-                      <td className="px-6 py-4">{client.emailAddress}</td>
-                      <td className="px-6 py-4">{client.businessName}</td>
-                      <td className="px-6 py-4">{client.address}</td>
-                      <td className="px-6 py-4 overflow-y-visible">
-                        <DropdownMenu
-                          title={<HiOutlineDotsHorizontal />}
-                          menuItems={menuItems}
-                          id={client.clientId}
-                        />
-                      </td>
-                    </tr>
-                  );
-                })}
-            </>
-          )}
-        </tbody>
-      </table>
+          <tbody>
+            {clientsData?.items &&
+              clientsData?.items?.map((client, i) => {
+                return (
+                  <tr
+                    key={client.emailAddress + i}
+                    className="bg-white border-b"
+                  >
+                    <td scope="row" className="px-6 py-4">
+                      {i + 1}
+                    </td>
+                    <td scope="row" className="px-6 py-4">
+                      {`${client.firstName} ${client.lastName}`}
+                    </td>
+                    <td className="px-6 py-4">{client.emailAddress}</td>
+                    <td className="px-6 py-4">{client.businessName}</td>
+                    <td className="px-6 py-4">{client.address}</td>
+                    <td className="px-6 py-4 overflow-y-visible">
+                      <DropdownMenu
+                        title={<HiOutlineDotsHorizontal />}
+                        menuItems={menuItems}
+                        id={client.clientId}
+                      />
+                    </td>
+                  </tr>
+                );
+              })}
+          </tbody>
+        </table>
+      )}
 
       {showPagination && (
         <div className="w-[150px] flex items-center m-auto justify-center mt-3">

@@ -1,8 +1,26 @@
 import api from "@/utils/api";
 import { StatusAndMessageResponse, UseUpdateClientInfo } from "@/store/useApi";
+import { BusinessSignUpFormValues } from "@/components/auth/BusinessSignUpForm";
 
 export const getUser = async () => {
   const res = await api.get("user");
+  return res.data;
+};
+
+export const updateUser = async (
+  postBody: any
+): Promise<StatusAndMessageResponse> => {
+  const res = await api.put("user", postBody);
+  return res.data;
+};
+
+export const updateBusiness = async (postBody: any) => {
+  const res = await api.put("business", postBody);
+  return res.data;
+};
+
+export const getBusinessDetail = async () => {
+  const res = await api.get("business");
   return res.data;
 };
 

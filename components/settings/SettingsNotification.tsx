@@ -51,7 +51,7 @@ const SettingsNotification: React.FC = () => {
                     min="1"
                   />
                 </div>
-                <div className="flex items-center gap-5">
+                <div className="flex items-center gap-2 md:gap-5">
                   <p className="text-neutral-black text-sm">
                     Days to repeat reminder
                   </p>
