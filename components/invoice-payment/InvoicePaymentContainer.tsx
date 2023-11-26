@@ -2,13 +2,14 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Form, Formik, FormikProps } from "formik";
-import { CustomButton, InputGroup } from "../common";
 import { HiLockClosed } from "react-icons/hi";
 import { useRouter } from "next/navigation";
+import { usePaystackPayment } from "react-paystack";
+import { CustomButton, InputGroup } from "../common";
 
 export type InvoicePaymentFormValues = {
   emailAddress: string;
-  amount: string;
+  amount: number;
 };
 
 enum PaymentScreen {
@@ -18,16 +19,44 @@ enum PaymentScreen {
 }
 
 const initialValues: InvoicePaymentFormValues = {
-  emailAddress: "",
-  amount: "",
+  emailAddress: "makybeky9@gmail.com",
+  amount: 100,
 };
+
+/* NOTE
+ - Business sends invoice via email
+ - User opens email and redirected to /invoices/payment/:id page
+ -- :id is the passed with the link (?id=123)
+ - Get the id using next param on this page 
+ - Make an api call to getInvoiceById invoices page 
+ - Endpoint returns email and amount, reference? (passed to formik)
+ - User makes payment and gets email confirmation
+ - Business gets their confirmation as well.
+*/
 
 const InvoicePaymentContainer: React.FC = () => {
   const [screen, setScreen] = useState<PaymentScreen>(PaymentScreen.Payment);
   const router = useRouter();
 
-  const handleSubmit = async () => {
+  const config = {
+    reference: new Date().getTime().toString(), // id (param)
+    email: initialValues.emailAddress,
+    amount: initialValues.amount * 100,
+    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY ?? "",
+  };
+
+  const onSuccess = () => {
     setScreen(PaymentScreen.Success);
+  };
+
+  const onClose = () => {
+    setScreen(PaymentScreen.Error);
+  };
+
+  const initializePayment = usePaystackPayment(config);
+
+  const handleSubmit = async () => {
+    initializePayment(onSuccess, onClose);
   };
 
   return (
@@ -84,10 +113,7 @@ const InvoicePaymentContainer: React.FC = () => {
               </p>
               <CustomButton
                 type="button"
-                onClick={() => {
-                  // router.replace("/sign-in")
-                  setScreen(PaymentScreen.Error);
-                }}
+                onClick={() => router.replace("/sign-in")}
               >
                 Done
               </CustomButton>
@@ -106,12 +132,21 @@ const InvoicePaymentContainer: React.FC = () => {
                 Sorry we could not complete your payment, please try again
                 later.
               </p>
-              <CustomButton
-                type="button"
-                onClick={() => router.replace("/sign-in")}
-              >
-                Done
-              </CustomButton>
+              <div className="w-full flex justify-evenly">
+                <button
+                  type="button"
+                  className="text-error"
+                  onClick={() => setScreen(PaymentScreen.Payment)}
+                >
+                  Retry
+                </button>
+                <CustomButton
+                  type="button"
+                  onClick={() => router.replace("/sign-in")}
+                >
+                  Done
+                </CustomButton>
+              </div>
             </div>
           )}
         </div>
