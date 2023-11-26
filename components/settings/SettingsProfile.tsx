@@ -122,7 +122,7 @@ const SettingsProfile: React.FC<ISettingsProfile> = ({ user, business }) => {
               <span className="text-primary">Edit</span>
             </button>
           </div>
-          <div className="grid grid-cols-2 items-center w-full">
+          <div className="grid lg:grid-cols-2 items-center w-full">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-center gap-2">
                 <p className="text-grey-light text-sm w-[200px] text-right">
@@ -167,7 +167,7 @@ const SettingsProfile: React.FC<ISettingsProfile> = ({ user, business }) => {
               <span className="text-primary">Edit</span>
             </button>
           </div>
-          <div className="grid grid-cols-2 items-center w-full">
+          <div className="grid lg:grid-cols-2 items-center w-full">
             <div className="flex flex-col gap-4">
               <div className="flex items-center justify-center gap-2">
                 <p className="text-grey-light text-sm w-[200px] text-right">
