@@ -42,7 +42,7 @@ const InvoicePaymentContainer: React.FC = () => {
     reference: new Date().getTime().toString(), // id (param)
     email: initialValues.emailAddress,
     amount: initialValues.amount * 100,
-    publicKey: process.env.NEXT_PUBLIC_PAYSTACK_KEY ?? "",
+    publicKey: process?.env?.NEXT_PUBLIC_PAYSTACK_KEY ?? "",
   };
 
   const onSuccess = () => {

@@ -18,7 +18,7 @@ const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
 
   const signOut = () => {
     localStorage.clear();
-    !unprotectedRoutes.includes(pathname) && router.push("/sign-in");
+    // !unprotectedRoutes.includes(pathname) && router.push("/sign-in");
   };
 
   const checkSession = () => {
@@ -26,9 +26,8 @@ const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
 
     const decodedData = token && jwtDecode(token);
     if (
-      !token &&
-      decodedData &&
-      (decodedData?.exp as any) < Date.now() / 1000
+      !token ||
+      (decodedData && (decodedData?.exp as any) < Date.now() / 1000)
     ) {
       signOut();
     }
