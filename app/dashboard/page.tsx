@@ -7,4 +7,4 @@ function Dashboard() {
   return <DashboardContainer />;
 }
 
-export default withAuth(Dashboard);
+export default withAuth(Dashboard, "/dashboard");

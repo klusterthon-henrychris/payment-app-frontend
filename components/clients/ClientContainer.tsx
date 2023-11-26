@@ -61,7 +61,9 @@ const ClientContainer: React.FC = () => {
             <p className="bold-title">
               {`${client?.firstName ?? ""} ${client?.lastName ?? ""}`}
             </p>
-            <p className="title mt-2">{client?.emailAddress ?? ""}</p>
+            <p className="font-bold text-sm lg:text-lg mt-2">
+              {client?.emailAddress ?? ""}
+            </p>
           </div>
           <div className="flex gap-4">
             <FeaturedBox
@@ -105,7 +107,7 @@ const ClientContainer: React.FC = () => {
       <ModalPopup
         isModalOpen={editModalOpen}
         toggleModal={toggleEditModal}
-        heading="Edit client info?"
+        heading="Edit client info"
         CustomBody={
           <AddClientsForm
             handleSubmit={handleEditInfo}
