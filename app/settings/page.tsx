@@ -1,8 +1,10 @@
 "use client";
 import React from "react";
+import withAuth from "@/utils/withAuth";
+import SettingsContainer from "@/components/settings/SettingsContainer";
 
-const Settings: React.FC = () => {
-  return <div>Settings</div>;
+const SettingsPage: React.FC = () => {
+  return <SettingsContainer />;
 };
 
-export default Settings;
+export default withAuth(SettingsPage, "/settings");
