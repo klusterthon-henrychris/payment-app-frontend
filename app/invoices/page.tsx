@@ -7,4 +7,4 @@ const InvoicesScreen: React.FC = () => {
   return <Invoices />;
 };
 
-export default withAuth(InvoicesScreen, "/invoices");
+export default withAuth(InvoicesScreen);

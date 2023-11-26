@@ -2,7 +2,6 @@
 import { createContext, FC, ReactNode, useContext, useEffect } from "react";
 import { jwtDecode } from "jwt-decode";
 import { usePathname, useRouter } from "next/navigation";
-import { unprotectedRoutes } from "@/components/common/ClientSideLayout";
 
 interface AuthContextProvider {
   children: ReactNode;
@@ -15,20 +14,28 @@ const AuthContext = createContext<IAuthContext>({} as IAuthContext);
 const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
   const router = useRouter();
   const pathname = usePathname();
+  const invoiceId = pathname.split("/")[2];
+
+  const unprotectedRoutes = [
+    "/sign-in",
+    "/sign-up",
+    `/pay-invoice/${invoiceId}`,
+  ];
 
   const signOut = () => {
-    localStorage.clear();
-    // !unprotectedRoutes.includes(pathname) && router.push("/sign-in");
+    if (unprotectedRoutes.includes(pathname)) {
+      return;
+    } else {
+      localStorage.clear();
+      router.push("/sign-in");
+    }
   };
 
   const checkSession = () => {
     const token = localStorage.getItem("accessToken");
 
     const decodedData = token && jwtDecode(token);
-    if (
-      !token ||
-      (decodedData && (decodedData?.exp as any) < Date.now() / 1000)
-    ) {
+    if (token && decodedData && (decodedData?.exp as any) < Date.now() / 1000) {
       signOut();
     }
   };

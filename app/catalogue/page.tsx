@@ -7,4 +7,4 @@ const CatalogueScreen: React.FC = () => {
   return <Catalogue />;
 };
 
-export default withAuth(CatalogueScreen, "/catalogue");
+export default withAuth(CatalogueScreen);

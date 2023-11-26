@@ -7,4 +7,4 @@ const SettingsPage: React.FC = () => {
   return <SettingsContainer />;
 };
 
-export default withAuth(SettingsPage, "/settings");
+export default withAuth(SettingsPage);
