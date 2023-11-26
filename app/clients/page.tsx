@@ -7,4 +7,4 @@ const ClientsScreen: React.FC = () => {
   return <ClientsContainer />;
 };
 
-export default withAuth(ClientsScreen, "/clients");
+export default withAuth(ClientsScreen);

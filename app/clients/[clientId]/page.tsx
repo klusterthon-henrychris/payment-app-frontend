@@ -7,4 +7,4 @@ const ClientPage: React.FC = () => {
   return <ClientContainer />;
 };
 
-export default withAuth(ClientPage, "/clients");
+export default withAuth(ClientPage);

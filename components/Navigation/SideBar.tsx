@@ -72,4 +72,4 @@ const SideBar: React.FC<ISideBar> = ({ mobileSideBarOpen }) => {
   );
 };
 
-export default withAuth(SideBar, "/");
+export default withAuth(SideBar);

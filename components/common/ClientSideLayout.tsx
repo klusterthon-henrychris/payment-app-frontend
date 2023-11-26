@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { NavBar, SideBar } from "@/components/Navigation";
 
-export const unprotectedRoutes = ["/sign-in", "/sign-up", "/invoices/payment/"];
+// export const unprotectedRoutes = ["/sign-in", "/sign-up", "/pay-invoice/"];
 
 interface IClientSideLayout {
   children: ReactNode;
@@ -13,7 +13,14 @@ interface IClientSideLayout {
 const ClientSideLayout: React.FC<IClientSideLayout> = ({ children }) => {
   const [mobileSideBarOpen, setMobileSideBarOpen] = useState(false);
   const pathname = usePathname();
+  const invoiceId = pathname.split("/")[2];
   const queryClient = new QueryClient();
+
+  const unprotectedRoutes = [
+    "/sign-in",
+    "/sign-up",
+    `/pay-invoice/${invoiceId}`,
+  ];
 
   const shouldShowSidebar = !unprotectedRoutes.includes(pathname);
 

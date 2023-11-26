@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import InvoicePaymentContainer from "@/components/invoice-payment/InvoicePaymentContainer";
+import InvoicePaymentContainer from "@/components/pay-invoice/InvoicePaymentContainer";
 
 const InvoicePayment: React.FC = () => {
   return <InvoicePaymentContainer />;

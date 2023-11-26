@@ -52,4 +52,4 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
   );
 };
 
-export default withAuth(NavBar, "/");
+export default withAuth(NavBar);
