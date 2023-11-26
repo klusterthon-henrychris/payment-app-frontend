@@ -73,7 +73,7 @@ const UserSignUpForm: React.FC<IUserSignUpForm> = ({ handleSubmit }) => {
                 </span>
               </div>
               <CustomButton type="submit" disabled={disabled}>
-                Continue
+                Sign up
               </CustomButton>
             </div>
           </Form>

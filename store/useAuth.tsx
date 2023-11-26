@@ -26,7 +26,7 @@ const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
     if (unprotectedRoutes.includes(pathname)) {
       return;
     } else {
-      localStorage.clear();
+      // localStorage.clear();
       router.push("/sign-in");
     }
   };
