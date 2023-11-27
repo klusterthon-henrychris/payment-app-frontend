@@ -2,7 +2,9 @@ import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 import { redirect } from "next/navigation";
 
-const instance = axios.create({ baseURL: "http://localhost:5000/api/" });
+const instance = axios.create({
+  baseURL: "https://kluster-api.up.railway.app/api/",
+});
 
 // Add a request interceptor
 instance.interceptors.request.use(
