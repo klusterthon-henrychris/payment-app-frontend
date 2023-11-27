@@ -4,6 +4,7 @@ import Delete from '../Reusables/Delete'
 import Share from '../Reusables/Share'
 import ViewCatalogue from '@/app/catalogue/[catalogueId]/page'
 import { useRouter } from 'next/navigation'
+
 interface CatalogueProps {
   catalogueId: string
 }
@@ -17,7 +18,7 @@ const CatalogueOptions = ({ catalogueId }: CatalogueProps) => {
   }
   const optionClick = (val: string) => {
     setOptionValue(val)
-    if(val==="View"){
+    if (val === "View") {
       router.push(`/catalogue/${catalogueId}`)
     }
   }
@@ -40,9 +41,9 @@ const CatalogueOptions = ({ catalogueId }: CatalogueProps) => {
           ))}
         </div>
       )}
-      {optionValue === "Delete" && <Delete params={{ open: optionValue, close: closeOptionClick, Id: catalogueId, item:"products" }} />}
-      {optionValue === "Share" && <Share params={{ open: optionValue, close: closeOptionClick, item:"product" }} />}
-      {optionValue==="View" && <ViewCatalogue Id={catalogueId}/>}
+      {optionValue === "Delete" && <Delete params={{ open: optionValue, close: closeOptionClick, Id: catalogueId, item: "products" }} />}
+      {optionValue === "Share" && <Share params={{ open: optionValue, close: closeOptionClick, item: "product" }} />}
+      {optionValue === "View" && <ViewCatalogue Id={catalogueId} />}
     </div>
   )
 }
