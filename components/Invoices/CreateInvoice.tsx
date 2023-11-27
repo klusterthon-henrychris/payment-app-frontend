@@ -6,6 +6,7 @@ import { CatalogueItem } from '../Catalogue/Catalogue'
 import InvoicePdf from './InvoicePdf'
 import SendInvoice from './SendInvoice'
 import InvoiceSent from './InvoiceSent'
+import { toast } from "react-toastify";
 
 const CreateInvoice = () => {
   //Catalogue creation model
@@ -88,6 +89,9 @@ const CreateInvoice = () => {
 
   const handleNextPageClick = () => {
     setModelContent((prev) => prev + 1)
+    if(modelContent===1 && amount===0){
+      toast.warn("Select atleast one item to generate invoice")
+    }
   }
 
   return (
@@ -170,7 +174,7 @@ const CreateInvoice = () => {
         ))}
         <div className='flex flex-row justify-between mt-[24px]'>
           <button className='ml-[24px] absolute bottom-[24px] text-[#F44336] font-Satoshi text-[14px] font-medium' onClick={closeModel}>Cancel</button>
-          <button className='absolute bottom-[24px] right-[24px] w-20 h-10 rounded-[8px] p-2.5 bg-[#008678] text-[#fff] font-Satoshi text-[14px] font-medium' onClick={handleNextPageClick}>Next</button>
+          <button className='absolute bottom-[24px] right-[24px] w-20 h-10 rounded-[8px] p-2.5 bg-[#008678] text-[#fff] font-Satoshi text-[14px] font-medium' onClick={handleNextPageClick} disabled={modelContent===1 && amount===0}>Next</button>
         </div>
       </figure>}
         {modelContent === 2 && amount && (
