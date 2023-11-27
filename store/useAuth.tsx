@@ -20,14 +20,15 @@ const AuthContextProvider: FC<AuthContextProvider> = ({ children }) => {
     "/sign-in",
     "/sign-up",
     `/pay-invoice/${invoiceId}`,
+    "/confirm-email",
   ];
 
   const signOut = () => {
     if (unprotectedRoutes.includes(pathname)) {
       return;
     } else {
-      // localStorage.clear();
       router.push("/sign-in");
+      localStorage.clear();
     }
   };
 

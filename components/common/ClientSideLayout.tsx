@@ -20,6 +20,7 @@ const ClientSideLayout: React.FC<IClientSideLayout> = ({ children }) => {
     "/sign-in",
     "/sign-up",
     `/pay-invoice/${invoiceId}`,
+    "/confirm-email",
   ];
 
   const shouldShowSidebar = !unprotectedRoutes.includes(pathname);
