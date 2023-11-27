@@ -42,9 +42,9 @@ const InvoicePaymentContainer: React.FC = () => {
     reference: new Date().getTime().toString(), // id (param)
     email: initialValues.emailAddress,
     amount: initialValues.amount * 100,
-    publicKey: process?.env?.NEXT_PUBLIC_PAYSTACK_KEY ?? "",
+    publicKey: "pk_test_e4b1f6a31bb0eae1313d3293ebd4a5fb39101bf1",
+    // publicKey: process?.env?.NEXT_PUBLIC_PAYSTACK_KEY ?? "",
   };
-
 
   const onSuccess = () => {
     setScreen(PaymentScreen.Success);
