@@ -45,7 +45,7 @@ function Invoices() {
             <CreateInvoice />
             <div className='flex flex-row justify-between mt-[96px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2'>
                 <p className='text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]'>Invoice List</p>
-                <div className='flex flex-row gap-[8px] items-center'>
+                {/* <div className='flex flex-row gap-[8px] items-center'>
                     <div className='flex flex-row items-center'>
 
                         <form className="flex items-center">
@@ -62,7 +62,7 @@ function Invoices() {
                     </div>
                     <div className='w-[302px] h-[25px] bg-[#fff] py-6 px-16 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px]'></div>
                     <div className='w-[50px] h-[25px] bg-[#fff] py-6 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px] mr-[60px]'></div>
-                </div>
+                </div> */}
             </div>
             <div className="relative overflow-x-auto ml-[24px]">
                 <table className="w-[1100px] text-sm text-left rtl:text-right text-gray-500 ">

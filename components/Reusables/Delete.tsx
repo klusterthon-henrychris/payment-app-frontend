@@ -19,9 +19,9 @@ const Delete = ({ params: { open, close, Id, item } }: OptionProps) => {
           }
         } catch (err: any) {
           console.error(err);
-          toast.error(
-            `Error deleting ${item}: ${err?.response?.data?.errors[0]?.description}`
-          );
+        //   toast.error(
+        //     `Error deleting ${item}: ${err?.response?.data?.errors[0]?.description}`
+        //   );
         }
       };
     return (
