@@ -21,7 +21,7 @@ export default function RootLayout({
       <body>
         <ToastContainer />
         <AuthContextProvider>
-          <ClientSideLayout children={children} />
+          <ClientSideLayout>{children}</ClientSideLayout>
         </AuthContextProvider>
       </body>
     </html>

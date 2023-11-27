@@ -7,4 +7,4 @@ const Payments: React.FC = () => {
   return <PaymentsContainer />;
 };
 
-export default withAuth(Payments, "/payments");
+export default withAuth(Payments);
