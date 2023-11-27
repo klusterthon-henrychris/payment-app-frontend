@@ -3,8 +3,10 @@ import React, { useState, useEffect } from 'react'
 import api from "@/utils/api";
 import { toast } from "react-toastify";
 import CreateInvoice from './CreateInvoice';
+import InvoiceOptions from './InvoiceOptions';
 
 interface InvoiceItem {
+    id: string,
     invoiceNo: string,
     amount: number,
     dueDate: string,
@@ -90,10 +92,10 @@ function Invoices() {
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody className='w-full'>
                         {invoices && invoices.map((item, index) => (
                             <tr className="bg-white border-b" key={index}>
-                                <td>
+                                <td scope="row" className="px-6 py-4">
                                     <input type="checkbox" className='ml-4' />
                                 </td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{new Date(item.dueDate).toLocaleDateString('en-US', {
@@ -106,6 +108,7 @@ function Invoices() {
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.amount}</td>
                                 <td>-</td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.status}</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"><InvoiceOptions invoiceId={item.id} /></td>
                             </tr>
                         ))}
                     </tbody>

@@ -1,7 +1,7 @@
 "use client"
 import React, { useState } from 'react'
-import DeleteCatalogue from './DeleteCatalogue'
-import ShareCatalogue from './ShareCatalogue'
+import Delete from '../Reusables/Delete'
+import Share from '../Reusables/Share'
 interface CatalogueProps {
   catalogueId: string
 }
@@ -34,8 +34,8 @@ const CatalogueOptions = ({ catalogueId }: CatalogueProps) => {
           ))}
         </div>
       )}
-      {optionValue === "Delete" && <DeleteCatalogue params={{ open: optionValue, close: closeOptionClick, catalogueId: catalogueId }} />}
-      {optionValue === "Share" && <ShareCatalogue params={{ open: optionValue, close: closeOptionClick }} />}
+      {optionValue === "Delete" && <Delete params={{ open: optionValue, close: closeOptionClick, Id: catalogueId, item:"products" }} />}
+      {optionValue === "Share" && <Share params={{ open: optionValue, close: closeOptionClick, item:"product" }} />}
     </div>
   )
 }
