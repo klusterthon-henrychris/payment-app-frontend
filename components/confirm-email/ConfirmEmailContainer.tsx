@@ -7,7 +7,6 @@ import { CustomButton, InputGroup } from "../common";
 
 export type InvoicePaymentFormValues = {
   emailAddress: string;
-  amount: number;
 };
 
 enum PaymentScreen {
@@ -16,8 +15,7 @@ enum PaymentScreen {
 }
 
 const initialValues: InvoicePaymentFormValues = {
-  emailAddress: "makybeky9@gmail.com",
-  amount: 100,
+  emailAddress: "",
 };
 
 const ConfirmEmailContainer: React.FC = () => {
