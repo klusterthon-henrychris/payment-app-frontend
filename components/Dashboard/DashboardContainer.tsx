@@ -1,6 +1,6 @@
 import React from "react";
 import { CustomButton } from "@/components/common";
-import FeaturedBox from "./FeaturedBox";
+import FeaturedBox from "../common/FeaturedBox";
 import Image from "next/image";
 import {
   useGetTotalCatalogue,

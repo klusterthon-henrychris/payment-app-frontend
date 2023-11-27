@@ -1,5 +1,5 @@
 "use client";
-import DashboardContainer from "@/components/dashboard/DashboardContainer";
+import DashboardContainer from "./../components/dashboard/DashboardContainer";
 import withAuth from "@/utils/withAuth";
 
 const Home: React.FC = () => {

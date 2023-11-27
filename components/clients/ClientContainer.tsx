@@ -7,8 +7,7 @@ import { queryKeys, useGetClientById, useUpdateClient } from "@/store/useApi";
 import AllClientsTable, { DeleteClientModal } from "./AllClientsTable";
 import ModalPopup from "../common/ModalPopup";
 import AddClientsForm, { AddClientsFormValues } from "./AddClientsForm";
-import { CustomButton } from "../common";
-import FeaturedBox from "../dashboard/FeaturedBox";
+import { CustomButton, FeaturedBox } from "../common";
 
 const ClientContainer: React.FC = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);

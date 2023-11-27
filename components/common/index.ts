@@ -1,4 +1,5 @@
 import CustomButton from "./CustomButton";
 import { InputGroup } from "./InputGroup";
+import FeaturedBox from "./FeaturedBox";
 
-export { CustomButton, InputGroup };
+export { CustomButton, InputGroup, FeaturedBox };
