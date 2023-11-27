@@ -4,11 +4,11 @@ import Image from "next/image";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
 import { queryKeys, useGetClientById, useUpdateClient } from "@/store/useApi";
-import FeaturedBox from "../dashboard/FeaturedBox";
 import AllClientsTable, { DeleteClientModal } from "./AllClientsTable";
 import ModalPopup from "../common/ModalPopup";
 import AddClientsForm, { AddClientsFormValues } from "./AddClientsForm";
 import { CustomButton } from "../common";
+import FeaturedBox from "../dashboard/FeaturedBox";
 
 const ClientContainer: React.FC = () => {
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);

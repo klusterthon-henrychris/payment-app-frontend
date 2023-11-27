@@ -1,5 +1,6 @@
 "use client";
 import DashboardContainer from "@/components/dashboard/DashboardContainer";
+import withAuth from "@/utils/withAuth";
 
 const Home: React.FC = () => {
   return (
@@ -9,4 +10,4 @@ const Home: React.FC = () => {
   );
 };
 
-export default Home;
+export default withAuth(Home);
