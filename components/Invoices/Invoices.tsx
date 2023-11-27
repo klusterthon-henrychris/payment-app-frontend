@@ -1,8 +1,48 @@
-import React from 'react'
+"use client"
+import React, { useState, useEffect } from 'react'
+import api from "@/utils/api";
+import { toast } from "react-toastify";
+import CreateInvoice from './CreateInvoice';
+import InvoiceOptions from './InvoiceOptions';
+
+interface InvoiceItem {
+    id: string,
+    invoiceNo: string,
+    amount: number,
+    dueDate: string,
+    dateOfIssuance: string
+    status: string,
+    invoiceItems: []
+}
 
 function Invoices() {
+    const [invoices, setInvoices] = useState<InvoiceItem[]>([]);
+
+    const getInvoices = async () => {
+        try {
+            const res = await api.get("invoices/all");
+            if (res?.data?.success) {
+                if (res?.data?.data.items) {
+                    setInvoices(res?.data?.data.items)
+                }
+            } else {
+                throw new Error("Error has occurred");
+            }
+        } catch (err: any) {
+            console.error(err);
+            toast.error(
+                `Error getting user: ${err?.response?.data?.errors[0]?.description}`
+            );
+        }
+    };
+
+    useEffect(() => {
+        getInvoices();
+    }, []);
+
     return (
         <div className='w-full h-screen bg-[#F3F3F3] flex flex-col'>
+            <CreateInvoice />
             <div className='flex flex-row justify-between mt-[96px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2'>
                 <p className='text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]'>Invoice List</p>
                 <div className='flex flex-row gap-[8px] items-center'>
@@ -52,91 +92,25 @@ function Invoices() {
                             </th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr className="bg-white border-b">
-                            <th>
-                                <input type="checkbox" className='ml-4' />
-                            </th>
-                            <th scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                Nov 10, 2023
-                            </th>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                458972
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                Eleanor Pena
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                                $680
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                0
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                -
-                            </td>
-                            <td className="px-6 py-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr className="bg-white border-b">
-                            <th>
-                                <input type="checkbox" className='ml-4' />
-                            </th>
-                            <th scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                Nov 10, 2023
-                            </th>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                458972
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                Jane Cooper
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                                $680
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                0
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                -
-                            </td>
-                            <td className="px-6 py-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                </svg>
-                            </td>
-                        </tr>
-                        <tr className="bg-white">
-                            <th>
-                                <input type="checkbox" className='ml-4' />
-                            </th>
-                            <th scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                Nov 10, 2023
-                            </th>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                458972
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                Robert Fox
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-medium font-Satoshi text-[#1E1E1E]">
-                                $680
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                0
-                            </td>
-                            <td className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">
-                                -
-                            </td>
-                            <td className="px-6 py-4">
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-                                    <path strokeLinecap="round" strokeLinejoin="round" d="M6.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM12.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0zM18.75 12a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
-                                </svg>
-                            </td>
-                        </tr>
+                    <tbody className='w-full'>
+                        {invoices && invoices.map((item, index) => (
+                            <tr className="bg-white border-b" key={index}>
+                                <td scope="row" className="px-6 py-4">
+                                    <input type="checkbox" className='ml-4' />
+                                </td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{new Date(item.dueDate).toLocaleDateString('en-US', {
+                                    month: 'short',
+                                    day: 'numeric',
+                                    year: 'numeric',
+                                })}</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.invoiceNo}</td>
+                                <td>-</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.amount}</td>
+                                <td>-</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.status}</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"><InvoiceOptions invoiceId={item.id} /></td>
+                            </tr>
+                        ))}
                     </tbody>
                 </table>
             </div>

@@ -7,7 +7,8 @@ import CatalogueOptions from "./CatalogueOptions";
 import api from "@/utils/api";
 import { toast } from "react-toastify";
 
-interface CatalogueItem {
+export interface CatalogueItem {
+  id: string;
   name: string;
   description: string;
   price: number;
@@ -29,8 +30,7 @@ const Catalogue = () => {
     try {
       const res = await api.get("products/all");
       if (res?.data?.success) {
-        console.log("res:", res?.data);
-        setCatalogues(res?.data?.data);
+        setCatalogues(res?.data?.data.items);
         setIsToggled(new Array(res?.data?.data.length).fill(true));
       } else {
         throw new Error("Error has occurred");
@@ -111,13 +111,12 @@ const Catalogue = () => {
                 <p className="text-[16px] text-[#1E1E1E] font-Satoshi font-normal ml-[16px]">
                   {item.name}
                 </p>
-                <CatalogueOptions />
+                <CatalogueOptions catalogueId={item.id} />
               </div>
               <div className="flex flex-row justify-around mt-[16px] items-center">
                 <button
-                  className={`bg-[#008678] w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ${
-                    isToggled[index] ? "justify-end" : "justify-start"
-                  }`}
+                  className={`bg-[#008678] w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ${isToggled[index] ? "justify-end" : "justify-start"
+                    }`}
                   onClick={() => handleToggle(index)}
                 >
                   <div

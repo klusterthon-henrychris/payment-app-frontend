@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 interface OptionProps {
     params: { open: string, close: () => void, Id: string, item: string }
 }
-const DeleteCatalogue = ({ params: { open, close, Id, item } }: OptionProps) => {
+const Delete = ({ params: { open, close, Id, item } }: OptionProps) => {
     const deleteCatalogue = async () => {
         try {
           const res = await api.delete(`${item}/${Id}`);
@@ -64,4 +64,4 @@ const DeleteCatalogue = ({ params: { open, close, Id, item } }: OptionProps) => 
     )
 }
 
-export default DeleteCatalogue
+export default Delete

@@ -45,6 +45,7 @@ const InvoicePaymentContainer: React.FC = () => {
     publicKey: process?.env?.NEXT_PUBLIC_PAYSTACK_KEY ?? "",
   };
 
+
   const onSuccess = () => {
     setScreen(PaymentScreen.Success);
   };
