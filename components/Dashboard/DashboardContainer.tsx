@@ -44,9 +44,8 @@ const DashboardContainer: React.FC = () => {
         />
       </div>
 
-      <div className="grid lg:grid-cols-3 gap-6 pb-6">
+      {/* <div className="grid lg:grid-cols-3 gap-6 pb-6">
         <div className="h-[344px] bg-white rounded-[8px] lg:col-span-2 title flex items-center justify-center">
-          {/* Sales trend */}
           <Image src="/sales-trend.svg" alt="logo" width={760} height={344} />
         </div>
 
@@ -87,7 +86,7 @@ const DashboardContainer: React.FC = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="grid lg:grid-cols-2 gap-6 justify-between mt-6">
         <div>

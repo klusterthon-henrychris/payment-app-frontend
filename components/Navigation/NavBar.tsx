@@ -29,12 +29,12 @@ const NavBar: React.FC<INavBar> = ({ toggleSideBar }) => {
       </div>
       <nav className="flex gap-6">
         <div className="flex items-center">
-          <Image
+          {/* <Image
             src="/icon-notification.svg"
             alt="logo"
             width={32}
             height={32}
-          />
+          /> */}
         </div>
         <div className="flex gap-3">
           <div className="flex items-center">

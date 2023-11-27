@@ -47,7 +47,7 @@ const ClientsContainer: React.FC = () => {
       <div className="flex justify-between items-center bg-white p-6 mt-6 rounded-t-lg">
         <p className="title">Client List</p>
         <div className="flex gap-[8px] items-center">
-          <div className="flex items-center">
+          {/* <div className="flex items-center">
             <label className="sr-only">Search</label>
             <div className="relative w-full">
               <input
@@ -58,7 +58,7 @@ const ClientsContainer: React.FC = () => {
                 placeholder="Search..."
               />
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
 

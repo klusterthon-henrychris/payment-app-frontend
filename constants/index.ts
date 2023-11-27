@@ -36,11 +36,11 @@ export const sideBarItems: ISideBarItems[] = [
     path: "/invoices",
     Icon: IconInvoices,
   },
-  {
-    displayName: "Payments",
-    path: "/payments",
-    Icon: IconPayments,
-  },
+  // {
+  //   displayName: "Payments",
+  //   path: "/payments",
+  //   Icon: IconPayments,
+  // },
   {
     displayName: "Settings",
     path: "/settings",
