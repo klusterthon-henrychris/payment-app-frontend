@@ -15,6 +15,8 @@ interface InvoiceItem {
     dateOfIssuance: string
     status: string,
     invoiceItems: []
+    clientFirstName: string;
+    clientLastName: string;
 }
 
 function Invoices() {
