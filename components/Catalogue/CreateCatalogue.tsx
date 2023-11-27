@@ -115,18 +115,14 @@ const CreateCatalogue = () => {
             <div className='flex flex-col gap-[4px]'>
               <label className='text-[#1E1E1E] text-[10px] font-bold font-Satoshi'>Price</label>
               <div className='flex flex-row gap-[4px]'>
-                <select style={{ textIndent: "16px" }} className='w-[84px] h-[40px] rounded-[8px] bg-[#9A9A9A] text-[#fff] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder:text-[#9A9A9A]'>
-                  <option>USD</option>
-                </select>
+                <input readOnly value={'NGN'} style={{ textIndent: "16px" }} className='w-[84px] h-[40px] rounded-[8px] bg-[#9A9A9A] text-[#fff] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder-[#9A9A9A] text-[#000]' />
                 <input type="number" style={{ textIndent: "16px" }} placeholder='0' className='w-[292px] h-[40px] rounded-[8px] border border-[1px] border-[#D9D9D9]  text-[14px] outline-none placeholder:text-[#9A9A9A]' onChange={(event) => setPrice(parseFloat(event.target.value))} />
               </div>
             </div>
             <div className='flex flex-col gap-[4px]'>
               <label className='text-[#1E1E1E] text-[10px] font-bold font-Satoshi'>Quantity</label>
               <div className='flex flex-row gap-[4px]'>
-                <select style={{ textIndent: "16px" }} className='w-[84px] h-[40px] rounded-[8px] bg-[#9A9A9A] text-[#fff] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder-[#9A9A9A] text-[#000]'>
-                  <option>Limited</option>
-                </select>
+                <input readOnly value={'Limited'} style={{ textIndent: "16px" }} className='w-[84px] h-[40px] rounded-[8px] bg-[#9A9A9A] text-[#fff] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder-[#9A9A9A] text-[#000]' />
                 <input style={{ textIndent: "16px" }} placeholder='0' className='w-[292px] h-[40px] rounded-[8px] border border-[1px] border-[#D9D9D9] text-[14px] outline-none placeholder:text-[#9A9A9A]' onChange={(event) => setQuantity(parseFloat(event.target.value))} />
               </div>
             </div>
