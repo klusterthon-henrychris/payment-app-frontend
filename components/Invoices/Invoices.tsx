@@ -4,9 +4,11 @@ import api from "@/utils/api";
 import { toast } from "react-toastify";
 import CreateInvoice from './CreateInvoice';
 import InvoiceOptions from './InvoiceOptions';
+import { getClientsById } from './invoiceAction/GetClientsById';
 
 interface InvoiceItem {
     id: string,
+    clientId: string,
     invoiceNo: string,
     amount: number,
     dueDate: string,
@@ -23,8 +25,26 @@ function Invoices() {
             const res = await api.get("invoices/all");
             if (res?.data?.success) {
                 if (res?.data?.data.items) {
-                    setInvoices(res?.data?.data.items)
+                    // Iterate through invoices and fetch client details for each
+                    const updatedInvoices = await Promise.all(
+                        res.data.data.items.map(async (invoice: InvoiceItem) => {
+                            const client = await getClientsById(invoice.clientId);
+                            if (client?.data) {
+                                return {
+                                    ...invoice,
+                                    clientFirstName: client.data.items.firstName,
+                                    clientLastName: client.data.items.lastName,
+                                };
+                            }
+                            return invoice;
+                        })
+                    );
+
+                    setInvoices(updatedInvoices);
                 }
+                // if (res?.data?.data.items) {
+                //     setInvoices(res?.data?.data.items)
+                // }
             } else {
                 throw new Error("Error has occurred");
             }
@@ -104,9 +124,9 @@ function Invoices() {
                                     year: 'numeric',
                                 })}</td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.invoiceNo}</td>
-                                <td>-</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.clientFirstName} {item.clientLastName}</td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.amount}</td>
-                                <td>-</td>
+                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">0</td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.status}</td>
                                 <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"><InvoiceOptions invoiceId={item.id} /></td>
                             </tr>
