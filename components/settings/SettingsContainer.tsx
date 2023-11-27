@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Tab } from "@headlessui/react";
 import SettingsProfile from "./SettingsProfile";
-import SettingsNotification from "./SettingsNotification";
+// import SettingsNotification from "./SettingsNotification";
 import {
   BusinessSignUpRes,
   useGetBusinessDetail,
@@ -10,7 +10,7 @@ import {
 import { AddClientsFormValues } from "../clients/AddClientsForm";
 
 const SettingsContainer: React.FC = () => {
-  const [tabs] = useState<string[]>(["profile", "notification"]);
+  const [tabs] = useState<string[]>(["profile"]);
   const { data: user } = useGetUser();
   const { data: business } = useGetBusinessDetail();
 
@@ -21,7 +21,7 @@ const SettingsContainer: React.FC = () => {
         business={business as BusinessSignUpRes}
       />
     ),
-    notification: <SettingsNotification />,
+    // notification: <SettingsNotification />,
   };
 
   return (
