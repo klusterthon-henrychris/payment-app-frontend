@@ -134,7 +134,7 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
           <p className="title mt-10">No clients yet</p>
         </div>
       ) : (
-        <table className="w-[1100px] md:w-full min-h-[100px] text-sm text-left rtl:text-right text-gray-500 overflow-y-visible">
+        <table className="w-[1100px] min-h-[100px] text-sm text-left rtl:text-right text-gray-500 overflow-y-visible">
           <thead className="text-sm font-bold border-b-[1px] border-[#D9D9D9] h-[45px] w-full">
             <tr>
               {tableHeads.map((headTitle) => (

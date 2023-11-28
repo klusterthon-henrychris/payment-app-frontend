@@ -96,7 +96,7 @@ const Invoices: React.FC<InvoicesProps> = ({ showButton = true }) => {
       <div className="relative max-w-screen overflow-x-scroll overflow-y-visible">
         {invoices && invoices.length ? (
           <table className="w-[1100px] text-sm text-left rtl:text-right text-gray-500">
-            <thead className="text-sm font-Satoshi font-bold text-[#1E1E1E] bg-[#F3F3F3] border-b-[1px] border-[#D9D9D9] h-[65px] w-full">
+            <thead className="text-sm font-Satoshi font-bold text-[#1E1E1E] bg-[#F3F3F3] border-b-[1px] border-[#D9D9D9] w-full">
               <tr>
                 <th scope="col" className="px-6 py-3"></th>
                 <th scope="col" className="px-6 py-3">
