@@ -100,7 +100,7 @@ const Invoices: React.FC<InvoicesProps> = ({ showButton = true }) => {
               <tr>
                 <th scope="col" className="px-6 py-3"></th>
                 <th scope="col" className="px-6 py-3">
-                  Date
+                  Due date
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Invoice No.
@@ -110,9 +110,6 @@ const Invoices: React.FC<InvoicesProps> = ({ showButton = true }) => {
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Amount
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Outstanding
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Status
@@ -140,7 +137,7 @@ const Invoices: React.FC<InvoicesProps> = ({ showButton = true }) => {
                     scope="row"
                     className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
                   >
-                    {item.invoiceNo}
+                    {item.id}
                   </td>
                   <td
                     scope="row"
@@ -153,12 +150,6 @@ const Invoices: React.FC<InvoicesProps> = ({ showButton = true }) => {
                     className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
                   >
                     {item.amount}
-                  </td>
-                  <td
-                    scope="row"
-                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
-                  >
-                    0
                   </td>
                   <td
                     scope="row"
