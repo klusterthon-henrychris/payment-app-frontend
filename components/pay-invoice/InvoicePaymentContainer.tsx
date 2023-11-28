@@ -1,15 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { Form, Formik, FormikProps } from "formik";
 import { HiLockClosed } from "react-icons/hi";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { usePaystackPayment } from "react-paystack";
 import { CustomButton, InputGroup } from "../common";
+import api from "@/utils/api";
+import { toast } from "react-toastify";
+import { getClientById } from "@/contexts/apiContext";
 
 export type InvoicePaymentFormValues = {
   emailAddress: string;
-  amount: number;
+  amount: number | string;
 };
 
 enum PaymentScreen {
@@ -17,11 +20,6 @@ enum PaymentScreen {
   Success = "success!",
   Error = "error!",
 }
-
-const initialValues: InvoicePaymentFormValues = {
-  emailAddress: "makybeky9@gmail.com",
-  amount: 100,
-};
 
 /* NOTE
  - Business sends invoice via email
@@ -36,15 +34,52 @@ const initialValues: InvoicePaymentFormValues = {
 
 const InvoicePaymentContainer: React.FC = () => {
   const [screen, setScreen] = useState<PaymentScreen>(PaymentScreen.Payment);
+  const [invoiceDetail, setInvoiceDetail] =
+    useState<InvoicePaymentFormValues>();
   const router = useRouter();
+  const param = useParams();
+  const invoiceId = param?.id;
+
+  const initialValues: InvoicePaymentFormValues = {
+    emailAddress: invoiceDetail?.emailAddress || "",
+    amount: invoiceDetail?.amount ?? "",
+  };
+
+  const getInvoiceDetail = async () => {
+    try {
+      const res = await api.get(`invoices/${invoiceId}`);
+      if (res?.data?.success) {
+        const client = await getClientById(res?.data?.data?.clientId);
+        setInvoiceDetail({
+          ...res?.data?.data,
+          emailAddress: client?.data?.emailAddress,
+        });
+      } else {
+        toast.error("Error has occurred, please try again");
+        throw new Error("Error has occurred");
+      }
+    } catch (err: any) {
+      console.error(err);
+      toast.error(
+        `Error has occurred, please try again: ${err?.response?.data?.errors[0]?.description}`
+      );
+    }
+  };
+
+  useEffect(() => {
+    getInvoiceDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const config = {
-    reference: new Date().getTime().toString(), // id (param)
+    reference: new Date().getTime().toString(),
     email: initialValues.emailAddress,
-    amount: initialValues.amount * 100,
+    amount: Number(initialValues.amount) * 100,
     publicKey: "pk_test_e4b1f6a31bb0eae1313d3293ebd4a5fb39101bf1",
     // publicKey: process?.env?.NEXT_PUBLIC_PAYSTACK_KEY ?? "",
   };
+
+  const initializePayment = usePaystackPayment(config);
 
   const onSuccess = () => {
     setScreen(PaymentScreen.Success);
@@ -54,14 +89,12 @@ const InvoicePaymentContainer: React.FC = () => {
     setScreen(PaymentScreen.Error);
   };
 
-  const initializePayment = usePaystackPayment(config);
-
-  const handleSubmit = async () => {
+  const handleSubmit = async (values: InvoicePaymentFormValues) => {
     initializePayment(onSuccess, onClose);
   };
 
   return (
-    <div className="min-h-screen bg-white w-screen flex flex-col items-center justify-center">
+    <div className="min-h-screen bg-white w-full flex flex-col items-center justify-center">
       <div className="flex flex-col items-center justify-center gap-16">
         <div className="">
           <Image src="/logo-light.svg" alt="logo" width={208} height={32} />
@@ -73,7 +106,11 @@ const InvoicePaymentContainer: React.FC = () => {
           </div>
 
           {screen === PaymentScreen.Payment ? (
-            <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            <Formik
+              initialValues={initialValues}
+              onSubmit={handleSubmit}
+              enableReinitialize
+            >
               {({ values }: FormikProps<InvoicePaymentFormValues>) => {
                 return (
                   <Form className="w-full py-6">

@@ -2,10 +2,12 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import { Form, Formik, FormikProps } from "formik";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { CustomButton, InputGroup } from "../common";
+import { toast } from "react-toastify";
+import api from "@/utils/api";
 
-export type InvoicePaymentFormValues = {
+export type ConfirmEmailFormValues = {
   emailAddress: string;
 };
 
@@ -14,16 +16,34 @@ enum PaymentScreen {
   Success = "Your account has been created",
 }
 
-const initialValues: InvoicePaymentFormValues = {
+const initialValues: ConfirmEmailFormValues = {
   emailAddress: "",
 };
 
 const ConfirmEmailContainer: React.FC = () => {
   const [screen, setScreen] = useState<PaymentScreen>(PaymentScreen.Confirm);
   const router = useRouter();
+  const params = useSearchParams();
+  const token = params.get("token");
 
-  const handleSubmit = async () => {
-    setScreen(PaymentScreen.Success);
+  const handleSubmit = async ({ emailAddress }: ConfirmEmailFormValues) => {
+    try {
+      const res = await api.get(
+        `user/confirm-email?emailAddress=${emailAddress}&token=${token}`
+      );
+
+      if (res?.status === 204) {
+        setScreen(PaymentScreen.Success);
+      } else {
+        toast.error("Error has occurred, please try again");
+        throw new Error("Error has occurred");
+      }
+    } catch (err: any) {
+      console.error(err);
+      toast.error(
+        `Error has occurred, please try again: ${err?.response?.data?.errors[0]?.description}`
+      );
+    }
   };
 
   return (
@@ -40,7 +60,7 @@ const ConfirmEmailContainer: React.FC = () => {
 
           {screen === PaymentScreen.Confirm ? (
             <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-              {({ values }: FormikProps<InvoicePaymentFormValues>) => {
+              {({ values }: FormikProps<ConfirmEmailFormValues>) => {
                 return (
                   <Form className="w-full py-12">
                     <div className="grid gap-10">

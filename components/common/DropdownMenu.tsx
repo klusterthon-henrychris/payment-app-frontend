@@ -42,7 +42,10 @@ const DropdownMenu: React.FC<IDropdownMenu> = ({
                       key={menuItem.title}
                       as="div"
                       className="p-3 rounded-md hover:bg-light-white cursor-pointer"
-                      onClick={() => menuItem.onClick(id)}
+                      onClick={() => {
+                        menuItem.onClick(id);
+                        console.log(id, "menu id");
+                      }}
                     >
                       {({ active }) => <span>{menuItem.title}</span>}
                     </Menu.Item>

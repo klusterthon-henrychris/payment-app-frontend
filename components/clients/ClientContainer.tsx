@@ -3,7 +3,12 @@ import { useParams } from "next/navigation";
 import Image from "next/image";
 import { toast } from "react-toastify";
 import { useQueryClient } from "@tanstack/react-query";
-import { queryKeys, useGetClientById, useUpdateClient } from "@/store/useApi";
+import {
+  queryKeys,
+  useDeleteClient,
+  useGetClientById,
+  useUpdateClient,
+} from "@/store/useApi";
 import AllClientsTable, { DeleteClientModal } from "./AllClientsTable";
 import ModalPopup from "../common/ModalPopup";
 import AddClientsForm, { AddClientsFormValues } from "./AddClientsForm";
@@ -16,8 +21,10 @@ const ClientContainer: React.FC = () => {
   const { clientId } = useParams();
   const { data: client } = useGetClientById(clientId as string);
   const { mutate: updateClient } = useUpdateClient();
+  const { mutate: deleteClient } = useDeleteClient();
 
   const toggleDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
+
   const toggleEditModal = () => setEditModalOpen(!editModalOpen);
 
   const queryClient = useQueryClient();
@@ -38,12 +45,25 @@ const ClientContainer: React.FC = () => {
     );
   };
 
+  const handleDeleteInfo = () => {
+    deleteClient(
+      { clientId: client?.clientId },
+      {
+        onSuccess: () => {
+          refetchData();
+          setDeleteModalOpen(false);
+          toast.success("Client deleted");
+        },
+      }
+    );
+  };
+
   return (
     <div className="w-full min-h-screen bg-light-white p-6">
       <div className="flex justify-end items-center gap-6">
-        <button type="submit" onClick={toggleDeleteModal}>
+        {/* <button type="submit" onClick={toggleDeleteModal}>
           <Image src="/icon-delete.svg" alt="delete" width={48} height={48} />
-        </button>
+        </button> */}
         <CustomButton onClick={toggleEditModal}>Edit client info</CustomButton>
       </div>
       <div className="grid md:grid-cols-5 py-6 gap-6">
@@ -64,7 +84,7 @@ const ClientContainer: React.FC = () => {
               {client?.emailAddress ?? ""}
             </p>
           </div>
-          <div className="flex gap-4">
+          {/* <div className="flex gap-4">
             <FeaturedBox
               label="All time payments"
               title="₦248,054"
@@ -75,11 +95,11 @@ const ClientContainer: React.FC = () => {
               title="₦48,054"
               className="w-[220px] bg-warning-soft"
             />
-          </div>
+          </div> */}
         </div>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
+      {/* <div className="grid grid-cols-3 gap-6">
         <FeaturedBox
           label="All Orders"
           title="15"
@@ -95,7 +115,7 @@ const ClientContainer: React.FC = () => {
           title="3"
           className="w-full bg-white"
         />
-      </div>
+      </div> */}
 
       {/* TEMP PLACEHOLDER */}
       <div className="flex justify-between items-center bg-white p-6 mt-20 rounded-t-lg">
@@ -118,6 +138,7 @@ const ClientContainer: React.FC = () => {
       <DeleteClientModal
         deleteModalOpen={deleteModalOpen}
         toggleDeleteModal={toggleDeleteModal}
+        handleSubmit={handleDeleteInfo}
       />
     </div>
   );

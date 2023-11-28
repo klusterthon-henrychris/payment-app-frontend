@@ -10,6 +10,8 @@ import {
 } from "@/store/useApi";
 import AllClientsTable from "../clients/AllClientsTable";
 import { useRouter } from "next/navigation";
+import Invoices from "../Invoices/Invoices";
+import CreateInvoice from "../Invoices/CreateInvoice";
 
 const DashboardContainer: React.FC = () => {
   const { data: user } = useGetUser();
@@ -23,7 +25,8 @@ const DashboardContainer: React.FC = () => {
     <div className="w-full min-h-screen bg-light-white flex flex-col p-6">
       <div className="flex justify-between items-center pb-1">
         <p className="bold-title">Hi {user?.firstName ?? ""} 👋</p>
-        <CustomButton>+ Generate Invoice</CustomButton>
+        {/* <CustomButton>+ Generate Invoice</CustomButton> */}
+        <CreateInvoice />
       </div>
 
       <div className="py-6 grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-10">
@@ -148,7 +151,10 @@ const DashboardContainer: React.FC = () => {
               </svg>
             </div>
           </div>
-          <div className="max-w-screen overflow-x-scroll overflow-y-visible">
+
+          <Invoices showButton={false} />
+
+          {/* <div className="max-w-screen overflow-x-scroll overflow-y-visible">
             <table className="w-[1100px] md:w-full min-h-[100px] text-sm text-left rtl:text-right text-gray-500 overflow-y-visible">
               <thead className="text-sm font-bold border-b-[1px] border-[#D9D9D9] h-[45px] w-full">
                 <tr>
@@ -212,7 +218,8 @@ const DashboardContainer: React.FC = () => {
                 </tr>
               </tbody>
             </table>
-          </div>
+          </div> */}
+
           {/* <div className="w-[364px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex">
             <p className="mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]">
               Showing 1-50 of 2000

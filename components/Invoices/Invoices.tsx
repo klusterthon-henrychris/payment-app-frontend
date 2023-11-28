@@ -1,73 +1,78 @@
-"use client"
-import React, { useState, useEffect } from 'react'
+"use client";
+import React, { useState, useEffect } from "react";
 import api from "@/utils/api";
 import { toast } from "react-toastify";
-import CreateInvoice from './CreateInvoice';
-import InvoiceOptions from './InvoiceOptions';
-import { getClientsById } from './invoiceAction/GetClientsById';
+import CreateInvoice from "./CreateInvoice";
+import InvoiceOptions from "./InvoiceOptions";
+import { getClientsById } from "./invoiceAction/GetClientsById";
 
 interface InvoiceItem {
-    id: string,
-    clientId: string,
-    invoiceNo: string,
-    amount: number,
-    dueDate: string,
-    dateOfIssuance: string
-    status: string,
-    invoiceItems: []
-    clientFirstName: string;
-    clientLastName: string;
+  id: string;
+  clientId: string;
+  invoiceNo: string;
+  amount: number;
+  dueDate: string;
+  dateOfIssuance: string;
+  status: string;
+  invoiceItems: [];
+  clientFirstName: string;
+  clientLastName: string;
 }
 
-function Invoices() {
-    const [invoices, setInvoices] = useState<InvoiceItem[]>([]);
+interface InvoicesProps {
+  showButton?: boolean;
+}
 
-    const getInvoices = async () => {
-        try {
-            const res = await api.get("invoices/all");
-            if (res?.data?.success) {
-                if (res?.data?.data.items) {
-                    // Iterate through invoices and fetch client details for each
-                    const updatedInvoices = await Promise.all(
-                        res.data.data.items.map(async (invoice: InvoiceItem) => {
-                            const client = await getClientsById(invoice.clientId);
-                            if (client?.data) {
-                                return {
-                                    ...invoice,
-                                    clientFirstName: client.data.items.firstName,
-                                    clientLastName: client.data.items.lastName,
-                                };
-                            }
-                            return invoice;
-                        })
-                    );
+const Invoices: React.FC<InvoicesProps> = ({ showButton = true }) => {
+  const [invoices, setInvoices] = useState<InvoiceItem[]>([]);
 
-                    setInvoices(updatedInvoices);
-                }
-                // if (res?.data?.data.items) {
-                //     setInvoices(res?.data?.data.items)
-                // }
-            } else {
-                throw new Error("Error has occurred");
-            }
-        } catch (err: any) {
-            console.error(err);
-            toast.error(
-                `Error getting user: ${err?.response?.data?.errors[0]?.description}`
-            );
+  const getInvoices = async () => {
+    try {
+      const res = await api.get("invoices/all");
+      if (res?.data?.success) {
+        if (res?.data?.data?.items) {
+          // Iterate through invoices and fetch client details for each
+          const updatedInvoices = await Promise.all(
+            res.data.data.items.map(async (invoice: InvoiceItem) => {
+              const client = await getClientsById(invoice.clientId);
+              if (client?.data) {
+                return {
+                  ...invoice,
+                  clientFirstName: client.data.firstName,
+                  clientLastName: client.data.lastName,
+                };
+              }
+              return invoice;
+            })
+          );
+
+          setInvoices(updatedInvoices);
         }
-    };
+        // if (res?.data?.data.items) {
+        //     setInvoices(res?.data?.data.items)
+        // }
+      } else {
+        throw new Error("Error has occurred");
+      }
+    } catch (err: any) {
+      console.error(err);
+    }
+  };
 
-    useEffect(() => {
-        getInvoices();
-    }, []);
+  useEffect(() => {
+    getInvoices();
+  }, []);
 
-    return (
-        <div className='w-full h-screen bg-[#F3F3F3] flex flex-col'>
-            <CreateInvoice />
-            <div className='flex flex-row justify-between mt-[96px] ml-[24px] items-center bg-[#fff] w-[1100px] py-2'>
-                <p className='text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]'>Invoice List</p>
-                {/* <div className='flex flex-row gap-[8px] items-center'>
+  return (
+    <div className="w-full h-screen bg-[#F3F3F3] flex flex-col max-w-screen">
+      {showButton && (
+        <>
+          <CreateInvoice />
+          <div className="flex flex-row justify-between mt-[96px] ml-[24px] items-center bg-[#fff] w -[1100px] py-2">
+            <p className="text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]">
+              Invoice List
+            </p>
+            {/* <div className='flex flex-row gap-[8px] items-center'>
                     <div className='flex flex-row items-center'>
 
                         <form className="flex items-center">
@@ -85,61 +90,100 @@ function Invoices() {
                     <div className='w-[302px] h-[25px] bg-[#fff] py-6 px-16 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px]'></div>
                     <div className='w-[50px] h-[25px] bg-[#fff] py-6 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px] mr-[60px]'></div>
                 </div> */}
-            </div>
-            <div className="relative overflow-x-auto ml-[24px]">
-                <table className="w-[1100px] text-sm text-left rtl:text-right text-gray-500 ">
-                    <thead className="text-sm font-Satoshi font-bold text-[#1E1E1E] bg-[#F3F3F3] border-b-[1px] border-[#D9D9D9] h-[40px] w-full">
-                        <tr>
-                            <th scope="col" className="px-6 py-3">
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Date
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Invoice No.
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Issued to
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Amount
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Outstanding
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                                Status
-                            </th>
-                            <th scope="col" className="px-6 py-3">
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody className='w-full'>
-                        {invoices && invoices.map((item, index) => (
-                            <tr className="bg-white border-b" key={index}>
-                                <td scope="row" className="px-6 py-4">
-                                    <input type="checkbox" className='ml-4' />
-                                </td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{new Date(item.dueDate).toLocaleDateString('en-US', {
-                                    month: 'short',
-                                    day: 'numeric',
-                                    year: 'numeric',
-                                })}</td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.invoiceNo}</td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.clientFirstName} {item.clientLastName}</td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.amount}</td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">0</td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]">{item.status}</td>
-                                <td scope="row" className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"><InvoiceOptions invoiceId={item.id} /></td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-            </div>
-            <div className='w-[#fff] w-[1100px] h-[52px] border-t-[1px] border-[#D9D9D9] ml-[24px] flex'>
-                <p className='mx-auto text-[12px] font-Satoshi font-medium text-[#1E1E1E]'>Showing 1-50 of 2000</p></div>
-        </div>
-    )
-}
+          </div>
+        </>
+      )}
+      <div className="relative max-w-screen overflow-x-scroll overflow-y-visible">
+        {invoices && invoices.length ? (
+          <table className="w-[1100px] text-sm text-left rtl:text-right text-gray-500">
+            <thead className="text-sm font-Satoshi font-bold text-[#1E1E1E] bg-[#F3F3F3] border-b-[1px] border-[#D9D9D9] h-[65px] w-full">
+              <tr>
+                <th scope="col" className="px-6 py-3"></th>
+                <th scope="col" className="px-6 py-3">
+                  Date
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Invoice No.
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Issued to
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Amount
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Outstanding
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  Status
+                </th>
+                <th scope="col" className="px-6 py-3"></th>
+              </tr>
+            </thead>
+            <tbody className="w-full">
+              {invoices.map((item, index) => (
+                <tr className="bg-white border-b" key={index}>
+                  <td scope="row" className="px-6 py-4">
+                    <input type="checkbox" className="ml-4" />
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
+                  >
+                    {new Date(item.dueDate).toLocaleDateString("en-US", {
+                      month: "short",
+                      day: "numeric",
+                      year: "numeric",
+                    })}
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
+                  >
+                    {item.invoiceNo}
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
+                  >
+                    {item.clientFirstName} {item.clientLastName}
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
+                  >
+                    {item.amount}
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
+                  >
+                    0
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
+                  >
+                    {item.status}
+                  </td>
+                  <td
+                    scope="row"
+                    className="px-6 py-4 text-[12px] font-normal font-Satoshi text-[#1E1E1E]"
+                  >
+                    <InvoiceOptions invoiceId={item.id} />
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <div className="flex items-center justify-center h-[200px] w-full bg-white m-6 mt-2">
+            <p className="title mt-10">No clients yet</p>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+};
 
-export default Invoices
+export default Invoices;

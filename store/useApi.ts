@@ -10,6 +10,7 @@ import { toast } from "react-toastify";
 import {
   AddClientPostBody,
   addClient,
+  deleteClient,
   getAllClients,
   getBusinessDetail,
   getClientById,
@@ -209,6 +210,23 @@ export const useUpdateClient = (
   any
 > => {
   return useMutation((updateInfo) => updateClient(updateInfo), {
+    ...options,
+    onError: (error: any) => toast.error("Error has occurred"),
+  });
+};
+
+export const useDeleteClient = (
+  options?: UseMutationOptions<
+    StatusAndMessageResponse,
+    StatusAndMessageResponse,
+    any
+  >
+): UseMutationResult<
+  StatusAndMessageResponse,
+  StatusAndMessageResponse,
+  any
+> => {
+  return useMutation((clientId) => deleteClient(clientId), {
     ...options,
     onError: (error: any) => toast.error("Error has occurred"),
   });

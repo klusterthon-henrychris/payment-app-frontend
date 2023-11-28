@@ -54,7 +54,7 @@ const Catalogue = () => {
         <p className="text-[#1E1E1E] font-Satoshi text-[16px] font-bold ml-[24px]">
           Product List
         </p>
-        <div className="flex flex-row gap-[8px] items-center">
+        {/* <div className="flex flex-row gap-[8px] items-center">
           <div className="flex flex-row items-center">
             <form className="flex items-center">
               <label className="sr-only">Search</label>
@@ -91,7 +91,7 @@ const Catalogue = () => {
           </div>
           <div className="w-[302px] h-[25px] bg-[#fff] py-6 px-16 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px]"></div>
           <div className="w-[50px] h-[25px] bg-[#fff] py-6 font-Satoshi border border-[1px] border-[#D9D9D9] rounded-[8px] mr-[60px]"></div>
-        </div>
+        </div> */}
       </div>
       <div className="flex flex-wrap space-x-[24px]">
         {catalogues.length > 0 &&
@@ -115,8 +115,9 @@ const Catalogue = () => {
               </div>
               <div className="flex flex-row justify-around mt-[16px] items-center">
                 <button
-                  className={`bg-[#008678] w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ${isToggled[index] ? "justify-end" : "justify-start"
-                    }`}
+                  className={`bg-[#008678] w-12 h-6 rounded-full p-1 flex items-center transition-colors duration-300 ${
+                    isToggled[index] ? "justify-end" : "justify-start"
+                  }`}
                   onClick={() => handleToggle(index)}
                 >
                   <div

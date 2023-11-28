@@ -48,8 +48,7 @@ export const getTotalCatalogue = async (): Promise<any> => {
 
 export const getClientById = async (clientId: string) => {
   const res = await api.get(`clients/${clientId}`);
-  if(res?.data)
-  return res.data;
+  if (res?.data) return res.data;
 };
 
 export type AddClientPostBody = {
@@ -72,6 +71,18 @@ export const updateClient = async ({
   postBody,
 }: UseUpdateClientInfo): Promise<StatusAndMessageResponse> => {
   const res = await api.put(`clients/${clientId}/update`, postBody);
+
+  return res.data;
+};
+
+export const deleteClient = async ({
+  clientId,
+}: {
+  clientId: string;
+}): Promise<StatusAndMessageResponse> => {
+  console.log(clientId, "clientId");
+
+  const res = await api.delete(`clients/${clientId}`);
 
   return res.data;
 };

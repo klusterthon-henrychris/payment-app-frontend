@@ -38,7 +38,7 @@ const LoginContainer: React.FC = () => {
     } catch (err: any) {
       console.error(err);
       toast.error(
-        `Error has occurred, please try again: ${err?.response.data.errors[0].description}`
+        `Error has occurred, please try again: ${err?.response?.data?.errors[0]?.description}`
       );
     }
   };

@@ -7,7 +7,12 @@ import {
 } from "react-icons/hi";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
-import { queryKeys, useGetAllClients, useUpdateClient } from "@/store/useApi";
+import {
+  queryKeys,
+  useDeleteClient,
+  useGetAllClients,
+  useUpdateClient,
+} from "@/store/useApi";
 import { getAllClients } from "@/contexts/apiContext";
 import DropdownMenu from "../common/DropdownMenu";
 import ModalPopup from "../common/ModalPopup";
@@ -32,10 +37,16 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [editId, setEditId] = useState("");
+  const [deleteId, setDeleteId] = useState("");
   const [pageNumber, setPageNumber] = useState(1);
   const { mutate: updateClient } = useUpdateClient();
+  const { mutate: deleteClient } = useDeleteClient();
 
-  const toggleDeleteModal = () => setDeleteModalOpen(!deleteModalOpen);
+  const toggleDeleteModal = (id: string) => {
+    setDeleteModalOpen(!deleteModalOpen);
+    setDeleteId(id);
+  };
+
   const toggleEditModal = (id: string) => {
     setEditModalOpen(!editModalOpen);
     setEditId(id);
@@ -78,6 +89,19 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
     );
   };
 
+  const handleDeleteInfo = () => {
+    deleteClient(
+      { clientId: editId },
+      {
+        onSuccess: () => {
+          refetchAllClients();
+          setDeleteModalOpen(false);
+          toast.success("Client deleted");
+        },
+      }
+    );
+  };
+
   useEffect(() => {
     refetchAllClients();
   }, [pageNumber]);
@@ -95,6 +119,7 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
     {
       title: "Delete",
       onClick: toggleDeleteModal,
+      id: deleteId,
     },
   ];
 
@@ -191,7 +216,8 @@ const AllClientsTable: React.FC<IAllClientsTable> = ({
       />
       <DeleteClientModal
         deleteModalOpen={deleteModalOpen}
-        toggleDeleteModal={toggleDeleteModal}
+        toggleDeleteModal={() => setDeleteModalOpen(false)}
+        handleSubmit={handleDeleteInfo}
       />
     </div>
   );
@@ -202,11 +228,13 @@ export default AllClientsTable;
 type IClientsModal = {
   deleteModalOpen: boolean;
   toggleDeleteModal: () => void;
+  handleSubmit: () => void;
 };
 
 export const DeleteClientModal: React.FC<IClientsModal> = ({
   deleteModalOpen,
   toggleDeleteModal,
+  handleSubmit,
 }) => {
   return (
     <ModalPopup
@@ -221,6 +249,7 @@ export const DeleteClientModal: React.FC<IClientsModal> = ({
         </p>
       }
       buttonText="Delete"
+      handleSubmit={handleSubmit}
     />
   );
 };
