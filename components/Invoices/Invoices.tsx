@@ -177,8 +177,8 @@ const Invoices: React.FC<InvoicesProps> = ({ showButton = true }) => {
             </tbody>
           </table>
         ) : (
-          <div className="flex items-center justify-center h-[200px] w-full bg-white m-6 mt-2">
-            <p className="title mt-10">No clients yet</p>
+          <div className="flex items-center justify-center h-[200px] w-full bg-white m-6 ml-0 mt-2">
+            <p className="title mt-10">No invoices yet</p>
           </div>
         )}
       </div>
