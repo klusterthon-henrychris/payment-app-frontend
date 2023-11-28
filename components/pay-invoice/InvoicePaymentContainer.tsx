@@ -147,7 +147,7 @@ const InvoicePaymentContainer: React.FC = () => {
                 />
               </div>
               <p className="paragraph text-center">
-                We have successfully made payment of ₦6800 for invoice #1234
+                Transaction log updated successfully
               </p>
               <CustomButton
                 type="button"
