@@ -72,7 +72,7 @@ const InvoicePaymentContainer: React.FC = () => {
   }, []);
 
   const config = {
-    reference: new Date().getTime().toString(),
+    reference: invoiceId as string,
     email: initialValues.emailAddress,
     amount: Number(initialValues.amount) * 100,
     publicKey: "pk_test_e4b1f6a31bb0eae1313d3293ebd4a5fb39101bf1",
